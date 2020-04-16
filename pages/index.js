@@ -1,203 +1,162 @@
-import Head from 'next/head'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
-const Home = () => (
-  <div className="container">
-    <Head>
-      <title>Create Next App</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+export const Index = props => {
+  const [heroes, setHeroes] = useState(props.heroes)
 
-    <main>
-      <h1 className="title">
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
-      </h1>
-
-      <p className="description">
-        Get started by editing <code>pages/index.js</code>
-      </p>
-
-      <div className="grid">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Learn &rarr;</h3>
-          <p>Learn about Next.js in an interactive course with quizzes!</p>
-        </a>
-
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Discover and deploy boilerplate example Next.js projects.</p>
-        </a>
-
-        <a
-          href="https://zeit.co/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          className="card"
-        >
-          <h3>Deploy &rarr;</h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with ZEIT Now.
-          </p>
-        </a>
+  return (
+    <div className="container">
+      <div className="wrap">
+        <header className="header">
+          <div className="hero">
+            Hero
+          </div>
+          <div className="games-played">
+            # Games
+          </div>
+          <div className="popularity">
+            Popularity %
+          </div>
+          <div className="pickrate">
+            Pick %
+          </div>
+          <div className="banrate">
+            Ban %
+          </div>
+          <div className="winrate">
+            Win %
+          </div>
+          <div className="delta-winrate">
+            % Δ
+          </div>
+        </header>
+        {heroes.sort((a, b) => b.popularity - a.popularity).map(hero => {
+          return (
+            <div className="row">
+              <div className="hero-img">
+                <img height="41px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
+              </div>   
+              <div className="hero-name">
+                {hero.name}
+              </div>
+              <div className="games-played">
+                {hero.gamesPlayed}
+              </div>
+              <div className="popularity">
+                {hero.popularity}
+              </div>
+              <div className="pickrate">
+                {hero.pickrate}
+              </div>
+              <div className="banrate">
+                {hero.banrate}
+              </div>
+              <div className="winrate">
+                {hero.winrate}
+              </div>
+              <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'}`}>
+                {hero.deltaWinrate}
+              </div>
+            </div>
+          )
+        })}
       </div>
-    </main>
-
-    <footer>
-      <a
-        href="https://zeit.co?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Powered by <img src="/zeit.svg" alt="ZEIT Logo" />
-      </a>
-    </footer>
-
     <style jsx>{`
-      .container {
-        min-height: 100vh;
-        padding: 0 0.5rem;
+      .hero-img {
+        height: 41px;
+        margin-right: 10px;
+        width: fit-content;
+        border-radius: 3px;
+        border: 1px solid #030303;
+      }
+
+      .header {
+        color: #cacaca;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        font-weight: 600;
+        padding: 10px 0;
       }
 
-      main {
-        padding: 5rem 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer {
-        width: 100%;
-        height: 100px;
-        border-top: 1px solid #eaeaea;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      footer img {
-        margin-left: 0.5rem;
-      }
-
-      footer a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .title a {
-        color: #0070f3;
-        text-decoration: none;
-      }
-
-      .title a:hover,
-      .title a:focus,
-      .title a:active {
-        text-decoration: underline;
-      }
-
-      .title {
-        margin: 0;
-        line-height: 1.15;
-        font-size: 4rem;
-      }
-
-      .title,
-      .description {
-        text-align: center;
-      }
-
-      .description {
-        line-height: 1.5;
-        font-size: 1.5rem;
-      }
-
-      code {
-        background: #fafafa;
-        border-radius: 5px;
-        padding: 0.75rem;
-        font-size: 1.1rem;
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-      }
-
-      .grid {
+      .row {
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-
-        max-width: 800px;
-        margin-top: 3rem;
+        height: 46px;
+        border-top: 1px solid #2a2a2a;
       }
 
-      .card {
-        margin: 1rem;
-        flex-basis: 45%;
-        padding: 1.5rem;
-        text-align: left;
-        color: inherit;
-        text-decoration: none;
-        border: 1px solid #eaeaea;
-        border-radius: 10px;
-        transition: color 0.15s ease, border-color 0.15s ease;
+      .wrap {
+        margin: 0 auto;
+        width: 750px;
+        position: relative;
+      }
+      
+      .hero {
+        margin-left: 51px;
+        margin-right: 20px;
+        width: 150px;
       }
 
-      .card:hover,
-      .card:focus,
-      .card:active {
-        color: #0070f3;
-        border-color: #0070f3;
+      .hero-name {
+        margin-right: 20px;
+        width: 150px;
       }
 
-      .card h3 {
-        margin: 0 0 1rem 0;
-        font-size: 1.5rem;
+      .games-played {
+        margin-right: 10px;
+        width: 90px;
       }
 
-      .card p {
-        margin: 0;
-        font-size: 1.25rem;
-        line-height: 1.5;
+      .popularity {
+        margin-right: 10px;
+        width: 120px;
       }
 
-      @media (max-width: 600px) {
-        .grid {
-          width: 100%;
-          flex-direction: column;
-        }
+      .pickrate {
+        margin-right: 20px;
+        width: 75px;
+      }
+
+      .banrate {
+        margin-right: 20px;
+        width: 75px;
+      }
+
+      .winrate {
+        margin-right: 20px;
+        width: 75px;
+      }
+
+      .delta-winrate {
+        width: 75px;
+      }
+
+      .negative {
+        color: #FF4500
+      }
+
+      .positive {
+        color: #3BE33B
       }
     `}</style>
-
     <style jsx global>{`
-      html,
-      body {
-        padding: 0;
-        margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
+        body {
+          color: #888;
+          font-family: lato,sans-serif;
+          background: #171717;
+          margin: 0;
+        }
     `}</style>
-  </div>
-)
+    </div>
+  )
 
-export default Home
+};
+
+export async function getStaticProps() {
+  return await axios.get('https://herobuilds-api.herokuapp.com/api/heroes/').then(res => {
+    return {
+      props: res.data
+    }
+  })
+}
+
+export default Index;
