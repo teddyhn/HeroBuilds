@@ -7,7 +7,7 @@ export const Index = props => {
   const [activeRole, setActiveRole] = useState()
 
   const changeFilter = async (role) => {
-    setActiveRole(role || 'all');
+    setActiveRole(role || 'All');
 
     if (role === '') {
       return setHeroes(props.heroes)
@@ -20,7 +20,6 @@ export const Index = props => {
 
   useEffect(() => {
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })))
-    console.log([props.heroes])
   }, [heroes])
 
   return (
@@ -29,30 +28,30 @@ export const Index = props => {
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2>Statistics</h2>
           <div className="role-filters">
-            <a className={`role-selection all ${activeRole === 'all' ? 'active' : null}`} onClick={() => changeFilter('')}>
+            <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => changeFilter('')}>
               All
             </a>
-            <a className={`role-selection tank ${activeRole === 'tank' ? 'active' : null}`} onClick={() => changeFilter('Tank')}>
+            <a className={`role-selection tank ${activeRole === 'Tank' ? 'active' : null}`} onClick={() => changeFilter('Tank')}>
               <img className="role-img" src={require('../public/assets/role/tank.png')} />
               Tank
             </a>
-            <a className={`role-selection bruiser ${activeRole === 'bruiser' ? 'active' : null}`} onClick={() => changeFilter('Bruiser')}>
+            <a className={`role-selection bruiser ${activeRole === 'Bruiser' ? 'active' : null}`} onClick={() => changeFilter('Bruiser')}>
               <img className="role-img" src={require('../public/assets/role/bruiser.png')} />
               Bruiser
             </a>
-            <a className={`role-selection ranged ${activeRole === 'ranged assassin' ? 'active' : null}`} onClick={() => changeFilter('Ranged Assassin')}>
+            <a className={`role-selection ranged ${activeRole === 'Ranged Assassin' ? 'active' : null}`} onClick={() => changeFilter('Ranged Assassin')}>
               <img className="role-img" src={require('../public/assets/role/ranged.png')} />
               Ranged Assassin
             </a>
-            <a className={`role-selection melee ${activeRole === 'melee assassin' ? 'active' : null}`} onClick={() => changeFilter('Melee Assassin')}>
+            <a className={`role-selection melee ${activeRole === 'Melee Assassin' ? 'active' : null}`} onClick={() => changeFilter('Melee Assassin')}>
               <img className="role-img" src={require('../public/assets/role/melee.png')} />
               Melee Assassin
             </a>
-            <a className={`role-selection healer ${activeRole === 'healer' ? 'active' : null}`} onClick={() => changeFilter('Healer')}>
+            <a className={`role-selection healer ${activeRole === 'Healer' ? 'active' : null}`} onClick={() => changeFilter('Healer')}>
               <img className="role-img" src={require('../public/assets/role/healer.png')} />
               Healer
             </a>
-            <a className={`role-selection support ${activeRole === 'support' ? 'active' : null}`} onClick={() => changeFilter('Support')}>
+            <a className={`role-selection support ${activeRole === 'Support' ? 'active' : null}`} onClick={() => changeFilter('Support')}>
               <img className="role-img" src={require('../public/assets/role/support.png')} />
               Support
             </a>
@@ -261,7 +260,7 @@ export async function getStaticProps() {
   let heroes = require('../Heroes.json');
 
   return await axios.get('https://herobuilds-api.herokuapp.com/api/heroes/').then(res => {
-    let heroesWithRoles = res.data.heroes.map(hero => {
+    res.data.heroes.map(hero => {
       heroes.forEach(i => {
         if (i.PrimaryName === hero.name) {
           hero.role = i.Group;
@@ -270,7 +269,7 @@ export async function getStaticProps() {
     })
 
     return {
-      props: heroesWithRoles
+      props: res.data
     }
   })
 }
