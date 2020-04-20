@@ -4,19 +4,7 @@ import axios from 'axios'
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
   const [highestWinrate, setHighestWinrate] = useState()
-  const [activeRole, setActiveRole] = useState()
-
-  const changeFilter = async (role) => {
-    setActiveRole(role || 'All');
-
-    if (role === '') {
-      return setHeroes(props.heroes)
-    }
-
-    return setHeroes(props.heroes.filter(el => {
-      return el.role === role
-    }))
-  }
+  const [activeRole, setActiveRole] = useState('All')
 
   useEffect(() => {
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })))
@@ -28,30 +16,30 @@ export const Index = props => {
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2>Statistics</h2>
           <div className="role-filters">
-            <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => changeFilter('')}>
+            <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => setActiveRole('All')}>
               All
             </a>
-            <a className={`role-selection tank ${activeRole === 'Tank' ? 'active' : null}`} onClick={() => changeFilter('Tank')}>
+            <a className={`role-selection tank ${activeRole === 'Tank' ? 'active' : null}`} onClick={() => setActiveRole('Tank')}>
               <img className="role-img" src={require('../public/assets/role/tank.png')} />
               Tank
             </a>
-            <a className={`role-selection bruiser ${activeRole === 'Bruiser' ? 'active' : null}`} onClick={() => changeFilter('Bruiser')}>
+            <a className={`role-selection bruiser ${activeRole === 'Bruiser' ? 'active' : null}`} onClick={() => setActiveRole('Bruiser')}>
               <img className="role-img" src={require('../public/assets/role/bruiser.png')} />
               Bruiser
             </a>
-            <a className={`role-selection ranged ${activeRole === 'Ranged Assassin' ? 'active' : null}`} onClick={() => changeFilter('Ranged Assassin')}>
+            <a className={`role-selection ranged ${activeRole === 'Ranged Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Ranged Assassin')}>
               <img className="role-img" src={require('../public/assets/role/ranged.png')} />
               Ranged Assassin
             </a>
-            <a className={`role-selection melee ${activeRole === 'Melee Assassin' ? 'active' : null}`} onClick={() => changeFilter('Melee Assassin')}>
+            <a className={`role-selection melee ${activeRole === 'Melee Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Melee Assassin')}>
               <img className="role-img" src={require('../public/assets/role/melee.png')} />
               Melee Assassin
             </a>
-            <a className={`role-selection healer ${activeRole === 'Healer' ? 'active' : null}`} onClick={() => changeFilter('Healer')}>
+            <a className={`role-selection healer ${activeRole === 'Healer' ? 'active' : null}`} onClick={() => setActiveRole('Healer')}>
               <img className="role-img" src={require('../public/assets/role/healer.png')} />
               Healer
             </a>
-            <a className={`role-selection support ${activeRole === 'Support' ? 'active' : null}`} onClick={() => changeFilter('Support')}>
+            <a className={`role-selection support ${activeRole === 'Support' ? 'active' : null}`} onClick={() => setActiveRole('Support')}>
               <img className="role-img" src={require('../public/assets/role/support.png')} />
               Support
             </a>
@@ -80,7 +68,7 @@ export const Index = props => {
             % Δ
           </div>
         </header>
-        {heroes ? heroes.sort((a, b) => b.popularity - a.popularity).map(hero => {
+        {heroes ? heroes.sort((a, b) => b.popularity - a.popularity).filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }).map(hero => {
           return (
             <div className="row">
               <div className="hero-img">
