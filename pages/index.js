@@ -5,6 +5,19 @@ export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
   const [highestWinrate, setHighestWinrate] = useState()
   const [activeRole, setActiveRole] = useState('All')
+  const [filter, setFilter] = useState('popularity')
+  const [sortOrder, setSortOrder] = useState('descending')
+
+  const changeSortOrder = (currentFilter) => {
+    if (currentFilter === filter) {
+      if (sortOrder === 'ascending') {
+        return setSortOrder('descending')
+      }
+      return setSortOrder('ascending')
+    }
+
+    else return setSortOrder('descending');
+  }
 
   useEffect(() => {
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })))
@@ -46,60 +59,134 @@ export const Index = props => {
           </div>
         </header>
         <header className="header">
-          <div className="hero cell-mr">
+          <div
+            className={`hero ${filter === 'name' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('name');
+              setFilter('name');
+            }}
+          >
             Hero
           </div>
-          <div className="games-played cell-mr">
+          <div 
+            className={`games-played ${filter === 'gamesPlayed' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('gamesPlayed');
+              setFilter('gamesPlayed');
+            }}
+          >
             # Games
           </div>
-          <div className="popularity sort cell-mr">
+          <div 
+            className={`popularity ${filter === 'popularity' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('popularity');
+              setFilter('popularity');
+            }}
+          >
             Popularity
           </div>
-          <div className="pickrate cell-mr">
+          <div 
+            className={`pickrate ${filter === 'pickrate' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('pickrate');
+              setFilter('pickrate');
+            }}
+          >
             Pick
           </div>
-          <div className="banrate cell-mr">
+          <div 
+            className={`banrate ${filter === 'banrate' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('banrate');
+              setFilter('banrate');
+            }}
+          >
             Ban
           </div>
-          <div className="winrate cell-mr">
+          <div
+            className={`winrate ${filter === 'winrate' ? sortOrder : ''} cell-mr`}
+            onClick={() => {
+              changeSortOrder('winrate');
+              setFilter('winrate');
+            }}
+          >
             Win
           </div>
-          <div className="delta-winrate">
+          <div
+            className={`delta-winrate ${filter === 'deltaWinrate' ? sortOrder : ''}`}
+            onClick={() => {
+              changeSortOrder('deltaWinrate');
+              setFilter('deltaWinrate');
+            }}
+          >
             % Δ
           </div>
         </header>
-        {heroes ? heroes.sort((a, b) => b.popularity - a.popularity).filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }).map(hero => {
-          return (
-            <div className="row">
-              <div className="hero-img">
-                <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
-              </div>   
-              <div className="hero-name cell cell-mr">
-                {hero.name}
-              </div>
-              <div className="games-played cell cell-mr">
-                {hero.gamesPlayed}
-              </div>
-              <div className="popularity cell cell-mr">
-                {hero.popularity}%
-                <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
-              </div>
-              <div className="pickrate cell cell-mr">
-                {hero.pickrate}%
-              </div>
-              <div className="banrate cell cell-mr">
-                {hero.banrate}%
-              </div>
-              <div className="winrate cell cell-mr">
-                {hero.winrate}%
-                <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
-              </div>
-              <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
-                {hero.deltaWinrate}
-              </div>
-            </div>
-          )
-        }) : null}
+        {heroes ? 
+        heroes.sort((a, b) => {
+          if (filter === 'name') {
+            if (sortOrder === 'ascending') {
+              if (a.name > b.name) {
+                return -1;
+              }
+
+              if (b.name > a.name) {
+                return 1;
+              }
+
+              return 0;
+            }
+
+            if (b.name > a.name) {
+              return -1;
+            }
+
+            if (a.name > b.name) {
+              return 1;
+            }
+
+            return 0
+          }
+
+          if (sortOrder === 'descending') {
+            return parseFloat(b[filter].replace(',', '')) - parseFloat(a[filter].replace(',', ''))
+          }
+          return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
+        })
+              .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
+              .map(hero => {
+                return (
+                  <div className="row">
+                    <div className="hero-img">
+                      <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
+                    </div>   
+                    <div className="hero-name cell cell-mr">
+                      {hero.name}
+                    </div>
+                    <div className="games-played cell cell-mr">
+                      {hero.gamesPlayed}
+                    </div>
+                    <div className="popularity cell cell-mr">
+                      {hero.popularity}%
+                      <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
+                    </div>
+                    <div className="pickrate cell cell-mr">
+                      {hero.pickrate}%
+                    </div>
+                    <div className="banrate cell cell-mr">
+                      {hero.banrate}%
+                    </div>
+                    <div className="winrate cell cell-mr">
+                      {hero.winrate}%
+                      <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
+                    </div>
+                    <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
+                      {hero.deltaWinrate}
+                    </div>
+                  </div>
+                )
+              }) : null}
       </div>
     <style jsx>{`
       .container {
@@ -124,6 +211,11 @@ export const Index = props => {
         padding: 10px 0;
       }
 
+      .header > div {
+        cursor: pointer;
+        user-select: none;
+      }
+
       .role-filters {
         display: flex;
         border: 1px solid #2a2a2a;
@@ -135,6 +227,7 @@ export const Index = props => {
         padding: 10px 14px;
         border-right: 1px solid #2a2a2a;
         cursor: pointer;
+        user-select: none;
       }
 
       .role-filters a.support {
@@ -196,9 +289,17 @@ export const Index = props => {
         width: 120px;
       }
 
-      .sort::after {
+      .header > .descending::after {
         font-family: "Font Awesome 5 Free";
         content: "\f0d7";
+        font-style: normal;
+        font-weight: 900;
+        margin-left: 5px;
+      }
+
+      .header > .ascending::after {
+        font-family: "Font Awesome 5 Free";
+        content: "\f0d8";
         font-style: normal;
         font-weight: 900;
         margin-left: 5px;
