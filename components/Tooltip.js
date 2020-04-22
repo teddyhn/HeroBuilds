@@ -13,7 +13,7 @@ export const Tooltip = props => {
                         border: 2px solid black;
                         position: absolute;
                         bottom: 42px;
-                        left: -160px;
+                        left: -162px;
                         background-color: #555;
                         color: #fff;
                         width: 340px;
