@@ -13,7 +13,7 @@ export const TooltipTrigger = props => {
             >
                 <img height="34px" src={`https://www.heroesprofile.com/includes/images/talents/${props.talent.img}`} />
             </div>
-            <Tooltip show={show} />
+            <Tooltip show={show} talent={props.talent} />
             <style jsx>{`
                 .tooltip-trigger > img {
                     border-radius: 6px;

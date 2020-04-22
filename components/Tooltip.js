@@ -1,15 +1,16 @@
 import React from 'react'
 
 export const Tooltip = props => {
-    console.log(props)
     return (
         <>
             <div className="tooltip">
-                <div className="tooltip-name">Talent Name</div>
-                <div className="tooltip-keybind">Keybinding</div>
-                <div className="tooltip-description">Description</div>
+                <div className="tooltip-name">{props.talent.name}</div>
+                <div className="tooltip-keybind">{props.talent.keybinding}</div>
+                <div className="tooltip-description">{props.talent.description}</div>
+                <div className="tooltip-arrow-border" style={{ marginBottom: '-3px', borderColor: 'black' }} />
                 <style jsx>{`
                     .tooltip {
+                        border: 2px solid black;
                         position: absolute;
                         bottom: 42px;
                         left: -160px;
@@ -34,6 +35,23 @@ export const Tooltip = props => {
                         text-align: center;
                         left: 170px;
                         bottom: -8px;
+                    }
+
+                    .tooltip-name {
+                        font-weight: 600;
+                    }
+
+                    .tooltip-keybind {
+                        margin: 0.5rem 0;
+                    }
+
+                    .tooltip-arrow-border {
+                        position: absolute;
+                        border-left: 10px solid transparent!important;
+                        border-right: 10px solid transparent!important;
+                        border-top: 10px solid;
+                        bottom: -8px;
+                        left: 168px;
                     }
                 `}</style>
             </div>
