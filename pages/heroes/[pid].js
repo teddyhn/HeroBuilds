@@ -3,109 +3,109 @@ import axios from 'axios'
 import TooltipTrigger from '../../components/TooltipTrigger'
 
 const Hero = (props) => {
-  console.log(props)
 
-  const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
+    const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
+    const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
 
-  const renderTalentTable = tier => {
-    return tier.map(talent => {
-        return (
-            <div className="row">
-                <div className="talent-img">
-                    <TooltipTrigger talent={talent} />
-                </div>  
-                <div className="talent-name cell cell-mr">
-                    {talent.name}
-                </div>
-                <div className="games-played cell cell-mr">
-                    {talent.gamesPlayed}
-                </div>
-                <div className="popularity cell cell-mr">
-                    {talent.popularity}%
-                </div>
-                <div className="winrate cell cell-mr">
-                    {talent.winrate}%
-                </div>
-                <div className="wins cell cell-mr">
-                    {talent.wins}
-                </div>
-                <div className="losses cell cell-mr">
-                    {talent.losses}
-                </div>
-                <style jsx>{`
-                    .container {
-                        font-size: 14px;
-                    }
+    const renderTalentTable = tier => {
+        return tier.map(talent => {
+            return (
+                <div className="row">
+                    <div className="talent-img">
+                        <TooltipTrigger talent={talent} />
+                    </div>  
+                    <div className="talent-name cell cell-mr">
+                        {talent.name}
+                    </div>
+                    <div className="games-played cell cell-mr">
+                        {talent.gamesPlayed}
+                    </div>
+                    <div className="popularity cell cell-mr">
+                        {talent.popularity}%
+                    </div>
+                    <div className="winrate cell cell-mr">
+                        {talent.winrate}%
+                    </div>
+                    <div className="wins cell cell-mr">
+                        {talent.wins}
+                    </div>
+                    <div className="losses cell cell-mr">
+                        {talent.losses}
+                    </div>
+                    <style jsx>{`
+                        .container {
+                            font-size: 14px;
+                        }
 
-                    .wrap {
-                        margin: 0 auto;
-                        width: 860.625px;
-                        position: relative;
-                    }
+                        .wrap {
+                            margin: 0 auto;
+                            width: 860.625px;
+                            position: relative;
+                        }
 
-                    .header {
-                        display: flex;
-                        font-weight: 600;
-                        padding: 10px 0;
-                    }
+                        .header {
+                            display: flex;
+                            font-weight: 600;
+                            padding: 10px 0;
+                        }
 
-                    .header > .talent-name {
-                        margin-left: 46px;
-                    }
+                        .header > .talent-name {
+                            margin-left: 46px;
+                        }
 
-                    .cell {
-                        padding-top: 14px;
-                    }
+                        .cell {
+                            padding-top: 14px;
+                        }
 
-                    .cell-mr {
-                        margin-right: 25px;
-                    }
+                        .cell-mr {
+                            margin-right: 25px;
+                        }
 
-                    .row {
-                        display: flex;
-                        height: 46px;
-                        border-top: 1px solid #2a2a2a;
-                        width: 100%;
-                    }
+                        .row {
+                            display: flex;
+                            height: 46px;
+                            border-top: 1px solid #2a2a2a;
+                            width: 100%;
+                        }
 
-                    .talent-img {
-                        height: 34px;
-                        margin: auto 10px auto 0;
-                        position: relative;
-                        width: fit-content;
-                    }
+                        .talent-img {
+                            height: 34px;
+                            margin: auto 10px auto 0;
+                            position: relative;
+                            width: fit-content;
+                        }
 
-                    .talent-name {
-                        width: 175px;
-                    }
+                        .talent-name {
+                            width: 175px;
+                        }
+                    
+                        .games-played {
+                            width: 90px;
+                        }
                 
-                    .games-played {
-                        width: 90px;
-                    }
-            
-                    .popularity {
-                        width: 120px;
-                    }
-            
-                    .pickrate {
-                        width: 75px;
-                    }
-            
-                    .winrate {
-                        width: 120px;
-                    }
+                        .popularity {
+                            width: 120px;
+                        }
+                
+                        .pickrate {
+                            width: 75px;
+                        }
+                
+                        .winrate {
+                            width: 120px;
+                        }
 
-                    .wins {
-                        width: 75px;
-                    }
+                        .wins {
+                            width: 75px;
+                        }
 
-                    .losses {
-                        width: 75px;
-                    }
-                `}</style>
-            </div>
-        )
-    })
+                        .losses {
+                            width: 75px;
+                        }
+                    `}</style>
+                </div>
+            )
+        })
   }
 
   return (
@@ -116,7 +116,7 @@ const Hero = (props) => {
                     return (
                         <div className="table">
                             <header>
-                                <h2>Level {tierConversion[i]}</h2>
+                                <h2>Level {props.name === 'Chromie' ? chromieConversion[i] : tierConversion[i]}</h2>
                             </header>
                             <header className="header">
                                 <div className="talent-name cell-mr">
@@ -252,7 +252,7 @@ export async function getServerSideProps(context) {
   
     return await axios.get(`https://herobuilds-api.herokuapp.com/api/hero/${context.query.pid}`).then(res => {
       return {
-        props: res.data
+        props: { ...res.data, name: context.query.pid }
       }
     })
 }
