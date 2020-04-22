@@ -197,6 +197,9 @@ export const Index = props => {
         height: 34px;
         margin: auto 10px auto 0;
         width: fit-content;
+      }
+
+      .hero-img > img {
         border-radius: 3px;
         border: 1px solid #030303;
       }
