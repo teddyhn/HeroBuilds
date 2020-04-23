@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import Img from 'react-image'
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Progress from '../components/ProgressBar/Progress'
+
+config.autoAddCss = false
 
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
