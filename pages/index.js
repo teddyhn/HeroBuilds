@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
+import Progress from '../components/ProgressBar/Progress'
 
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
@@ -8,6 +9,7 @@ export const Index = props => {
   const [activeRole, setActiveRole] = useState('All')
   const [filter, setFilter] = useState('popularity')
   const [sortOrder, setSortOrder] = useState('descending')
+  const [isLoading, setIsLoading] = useState(true)
 
   const changeSortOrder = (currentFilter) => {
     if (currentFilter === filter) {
@@ -21,11 +23,13 @@ export const Index = props => {
   }
 
   useEffect(() => {
-    setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })))
+    setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })));
+    setIsLoading(false)
   }, [heroes])
 
   return (
     <div className="container">
+      <Progress isAnimating={isLoading} />
       <div className="wrap">
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2>Statistics</h2>
@@ -165,7 +169,10 @@ export const Index = props => {
                       </div>  
                     </Link> 
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div className="hero-name cell cell-mr">
+                      <div
+                        className="hero-name cell cell-mr"
+                        onClick={() => setIsLoading(true)}
+                      >
                         {hero.name}
                       </div>
                     </Link>
