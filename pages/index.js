@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
+import Img from 'react-image'
 import Progress from '../components/ProgressBar/Progress'
 
 export const Index = props => {
@@ -168,7 +169,12 @@ export const Index = props => {
                         className="hero-img"
                         onClick={() => setIsLoading(true)}
                       >
-                        <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
+                        <Img 
+                          height="34px" 
+                          src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
+                          style={{ borderRadius: '3px', border: '1px solid #030303' }}
+                          loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
+                        />
                       </div>  
                     </Link> 
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
@@ -213,11 +219,6 @@ export const Index = props => {
         height: 34px;
         margin: auto 10px auto 0;
         width: fit-content;
-      }
-
-      .hero-img > img {
-        border-radius: 3px;
-        border: 1px solid #030303;
       }
 
       header {
