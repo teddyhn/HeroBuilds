@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
@@ -158,12 +159,16 @@ export const Index = props => {
               .map(hero => {
                 return (
                   <div className="row">
-                    <div className="hero-img">
-                      <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
-                    </div>   
-                    <div className="hero-name cell cell-mr">
-                      {hero.name}
-                    </div>
+                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                      <div className="hero-img">
+                        <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
+                      </div>  
+                    </Link> 
+                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                      <div className="hero-name cell cell-mr">
+                        {hero.name}
+                      </div>
+                    </Link>
                     <div className="games-played cell cell-mr">
                       {hero.gamesPlayed}
                     </div>
@@ -194,6 +199,7 @@ export const Index = props => {
       }
 
       .hero-img {
+        cursor: pointer;
         height: 34px;
         margin: auto 10px auto 0;
         width: fit-content;
@@ -281,6 +287,7 @@ export const Index = props => {
       }
 
       .hero-name {
+        cursor: pointer;
         width: 110px;
       }
 
