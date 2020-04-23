@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import TooltipTrigger from '../../components/TooltipTrigger'
+import Progress from '../../components/ProgressBar/Progress'
 
 const Hero = (props) => {
+    const [isLoading, setIsLoading] = useState(true)
 
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
@@ -108,8 +110,13 @@ const Hero = (props) => {
         })
   }
 
+  useEffect(() => {
+      setIsLoading(false);
+  }, [])
+
   return (
       <div className="container">
+        <Progress isAnimating={isLoading} />
         <div className="wrap">
             <>
                 {props.talents.map((tier, i) => {

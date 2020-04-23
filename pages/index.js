@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
+import Progress from '../components/ProgressBar/Progress'
 
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)
@@ -7,6 +9,7 @@ export const Index = props => {
   const [activeRole, setActiveRole] = useState('All')
   const [filter, setFilter] = useState('popularity')
   const [sortOrder, setSortOrder] = useState('descending')
+  const [isLoading, setIsLoading] = useState(true)
 
   const changeSortOrder = (currentFilter) => {
     if (currentFilter === filter) {
@@ -20,11 +23,13 @@ export const Index = props => {
   }
 
   useEffect(() => {
-    setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })))
+    setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })));
+    setIsLoading(false)
   }, [heroes])
 
   return (
     <div className="container">
+      <Progress isAnimating={isLoading} />
       <div className="wrap">
         <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2>Statistics</h2>
@@ -158,12 +163,22 @@ export const Index = props => {
               .map(hero => {
                 return (
                   <div className="row">
-                    <div className="hero-img">
-                      <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
-                    </div>   
-                    <div className="hero-name cell cell-mr">
-                      {hero.name}
-                    </div>
+                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                      <div
+                        className="hero-img"
+                        onClick={() => setIsLoading(true)}
+                      >
+                        <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
+                      </div>  
+                    </Link> 
+                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                      <div
+                        className="hero-name cell cell-mr"
+                        onClick={() => setIsLoading(true)}
+                      >
+                        {hero.name}
+                      </div>
+                    </Link>
                     <div className="games-played cell cell-mr">
                       {hero.gamesPlayed}
                     </div>
@@ -194,6 +209,7 @@ export const Index = props => {
       }
 
       .hero-img {
+        cursor: pointer;
         height: 34px;
         margin: auto 10px auto 0;
         width: fit-content;
@@ -281,6 +297,7 @@ export const Index = props => {
       }
 
       .hero-name {
+        cursor: pointer;
         width: 110px;
       }
 
