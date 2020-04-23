@@ -316,6 +316,10 @@ export const Index = props => {
         font-style: normal;
         font-weight: 900;
         margin-left: 5px;
+        display: inline-block;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
       }
 
       .header > .ascending::after {
@@ -324,6 +328,10 @@ export const Index = props => {
         font-style: normal;
         font-weight: 900;
         margin-left: 5px;
+        display: inline-block;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
       }
 
       .pickrate {
