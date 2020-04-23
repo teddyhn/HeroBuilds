@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Link from 'next/link'
 import Img from 'react-image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Progress from '../components/ProgressBar/Progress'
 
 export const Index = props => {
@@ -72,7 +74,9 @@ export const Index = props => {
               setFilter('name');
             }}
           >
-            Hero
+            <span>Hero</span>
+            {filter === 'name' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'name' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div 
             className={`games-played ${filter === 'gamesPlayed' ? sortOrder : ''} cell-mr`}
@@ -81,16 +85,20 @@ export const Index = props => {
               setFilter('gamesPlayed');
             }}
           >
-            # Games
+            <span># Games</span>
+            {filter === 'gamesPlayed' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'gamesPlayed' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div 
-            className={`popularity ${filter === 'popularity' ? sortOrder : ''} cell-mr`}
+            className={`popularity cell-mr`}
             onClick={() => {
               changeSortOrder('popularity');
               setFilter('popularity');
             }}
           >
-            Popularity
+            <span>Popularity</span>
+            {filter === 'popularity' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'popularity' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div 
             className={`pickrate ${filter === 'pickrate' ? sortOrder : ''} cell-mr`}
@@ -99,7 +107,9 @@ export const Index = props => {
               setFilter('pickrate');
             }}
           >
-            Pick
+            <span>Pick</span>
+            {filter === 'pickrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'pickrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div 
             className={`banrate ${filter === 'banrate' ? sortOrder : ''} cell-mr`}
@@ -108,7 +118,9 @@ export const Index = props => {
               setFilter('banrate');
             }}
           >
-            Ban
+            <span>Ban</span>
+            {filter === 'banrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'banrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div
             className={`winrate ${filter === 'winrate' ? sortOrder : ''} cell-mr`}
@@ -117,7 +129,9 @@ export const Index = props => {
               setFilter('winrate');
             }}
           >
-            Win
+            <span>Win</span>
+            {filter === 'winrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'winrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
           <div
             className={`delta-winrate ${filter === 'deltaWinrate' ? sortOrder : ''}`}
@@ -126,7 +140,9 @@ export const Index = props => {
               setFilter('deltaWinrate');
             }}
           >
-            % Δ
+            <span>% Δ</span>
+            {filter === 'deltaWinrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+            {filter === 'deltaWinrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
         </header>
         {heroes ? 
@@ -278,6 +294,10 @@ export const Index = props => {
         margin-right: 30px;
       }
 
+      .cell-mr > span {
+        margin-right: 5px;
+      }
+
       .row {
         display: flex;
         height: 46px;
@@ -310,30 +330,6 @@ export const Index = props => {
         width: 120px;
       }
 
-      .header > .descending::after {
-        font-family: "Font Awesome 5 Free";
-        content: "\f0d7";
-        font-style: normal;
-        font-weight: 900;
-        margin-left: 5px;
-        display: inline-block;
-        font-variant: normal;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      .header > .ascending::after {
-        font-family: "Font Awesome 5 Free";
-        content: "\f0d8";
-        font-style: normal;
-        font-weight: 900;
-        margin-left: 5px;
-        display: inline-block;
-        font-variant: normal;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-      }
-
       .pickrate {
         width: 75px;
       }
@@ -359,8 +355,6 @@ export const Index = props => {
       }
     `}</style>
     <style jsx global>{`
-        @import url("https://use.fontawesome.com/releases/v5.13.0/css/all.css");
-
         body {
           color: #888;
           font-family: lato,sans-serif;
