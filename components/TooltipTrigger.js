@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Img from 'react-image'
 import Tooltip from './Tooltip'
 
 export const TooltipTrigger = props => {
@@ -11,15 +12,14 @@ export const TooltipTrigger = props => {
                 onMouseEnter={() => setShow(true)}
                 onMouseLeave={() => setShow(false)}
             >
-                <img height="34px" src={`https://www.heroesprofile.com/includes/images/talents/${props.talent.img}`} />
+                <Img 
+                    height="34px" 
+                    src={`https://www.heroesprofile.com/includes/images/talents/${props.talent.img}`}
+                    style={{ borderRadius: '6px', border: '1px solid #2a2a2a' }}
+                    loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '6px' }}/>}
+                />
             </div>
             <Tooltip show={show} talent={props.talent} />
-            <style jsx>{`
-                .tooltip-trigger > img {
-                    border-radius: 6px;
-                    border: 1px solid #2a2a2a;
-                }
-            `}</style>
         </>
     )
 }
