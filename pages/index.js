@@ -164,7 +164,10 @@ export const Index = props => {
                 return (
                   <div className="row">
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div className="hero-img">
+                      <div
+                        className="hero-img"
+                        onClick={() => setIsLoading(true)}
+                      >
                         <img height="34px" src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`} />
                       </div>  
                     </Link> 
