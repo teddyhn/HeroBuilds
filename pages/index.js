@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Progress from '../components/ProgressBar/Progress'
 
-config.autoAddCss = false
+config.autoAddCss = false;
 
 export const Index = props => {
   const [heroes, setHeroes] = useState(props.heroes)

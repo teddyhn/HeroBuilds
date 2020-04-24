@@ -12,7 +12,7 @@ export const Tooltip = props => {
                     .tooltip {
                         border: 2px solid black;
                         position: absolute;
-                        bottom: 42px;
+                        bottom: ${props.offset || '42px'};
                         left: -162px;
                         background-color: #555;
                         color: #fff;
@@ -22,6 +22,7 @@ export const Tooltip = props => {
                         opacity: ${props.show ? '100' : '0'};
                         transition: visibility 0s, opacity 0.2s linear;
                         visibility: ${props.show ? 'show' : 'hidden'};
+                        z-index: 1000;
                     }
 
                     .tooltip::after {
