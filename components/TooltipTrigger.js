@@ -19,7 +19,7 @@ export const TooltipTrigger = props => {
                     loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '6px' }}/>}
                 />
             </div>
-            <Tooltip show={show} talent={props.talent} />
+            <Tooltip show={show} talent={props.talent} offset={props.offset} />
         </>
     )
 }
