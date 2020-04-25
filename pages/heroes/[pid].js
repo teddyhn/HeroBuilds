@@ -101,11 +101,13 @@ const Hero = (props) => {
         return tier.map(talent => {
             return (
                 <div className="row">
-                    <div className="talent-img">
-                        <TooltipTrigger talent={talent} />
-                    </div>  
-                    <div className="talent-name">
-                        {talent.name}
+                    <div className="talent-info">
+                        <div className="talent-img">
+                            <TooltipTrigger talent={talent} />
+                        </div>  
+                        <div className="talent-name">
+                            {talent.name}
+                        </div>
                     </div>
                     <div className="talent-stats">
                         <div className="games-played cell">
@@ -147,7 +149,7 @@ const Hero = (props) => {
 
                         .cell {
                             padding-top: 14px;
-                            width: 75px;
+                            width: 60px;
                             text-align: center;
                         }
 
@@ -156,6 +158,10 @@ const Hero = (props) => {
                             height: 46px;
                             border-top: 1px solid #2a2a2a;
                             width: 100%;
+                        }
+
+                        .talent-info {
+                            display: flex;
                         }
 
                         .talent-img {
@@ -217,8 +223,10 @@ const Hero = (props) => {
                                 <h2>Level {props.name === 'Chromie' ? chromieConversion[i] : tierConversion[i]}</h2>
                             </header>
                             <header className="header">
-                                <div className="talent-name">
-                                    Talent
+                                <div className="talent-header-name">
+                                    <div className="talent-name">
+                                        Talent
+                                    </div>
                                 </div>
                                 <div className="talent-header-stats">
                                     <div className="games-played">
@@ -291,10 +299,6 @@ const Hero = (props) => {
                 width: 100%;
             }
 
-            .header > .talent-name {
-                margin-left: 46px;
-            }
-
             .cell {
                 padding-top: 14px;
             }
@@ -318,13 +322,14 @@ const Hero = (props) => {
             }
 
             .talent-name {
+                margin-left: 46px;
                 width: 175px;
             }
 
             .talent-header-stats {
                 display: flex;
-                width: 100%;
                 justify-content: space-around;
+                width: 100%;
             }
 
             .talent-header-stats > div {

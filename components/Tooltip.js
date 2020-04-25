@@ -1,15 +1,25 @@
 import React from 'react'
+import Img from 'react-image'
 
 export const Tooltip = props => {
     return (
         <>
             <div className="tooltip">
-                <div className="tooltip-name">{props.talent.name}</div>
-                <div className="tooltip-keybind">{props.talent.keybinding}</div>
-                <div className="tooltip-description">{props.talent.description}</div>
-                <div className="tooltip-arrow-border" style={{ marginBottom: '-3px', borderColor: 'black' }} />
+                <Img 
+                    height="34px" 
+                    src={`https://www.heroesprofile.com/includes/images/talents/${props.talent.img}`}
+                    style={{ border: '1px solid #2a2a2a', marginRight: '10px' }}
+                    loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '6px' }}/>}
+                />
+                <div className="tooltip-info">
+                    <div className="tooltip-name">{props.talent.name}</div>
+                    <div className="tooltip-keybind" style={{ color: '#bfd4fd' }}>{props.talent.keybinding}</div>
+                    <div className="tooltip-description">{props.talent.description}</div>
+                    <div className="tooltip-arrow-border" style={{ marginBottom: '-3px', borderColor: 'black' }} />
+                </div>
                 <style jsx>{`
                     .tooltip {
+                        display: flex;
                         border: 2px solid black;
                         position: absolute;
                         bottom: ${props.offset || '42px'};
