@@ -15,8 +15,6 @@ const Hero = (props) => {
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
 
-    console.log(props)
-
     const renderBuilds = builds => {
         return builds.map(build => {
             return (
@@ -106,23 +104,25 @@ const Hero = (props) => {
                     <div className="talent-img">
                         <TooltipTrigger talent={talent} />
                     </div>  
-                    <div className="talent-name cell cell-mr">
+                    <div className="talent-name">
                         {talent.name}
                     </div>
-                    <div className="games-played cell cell-mr">
-                        {talent.gamesPlayed}
-                    </div>
-                    <div className="popularity cell cell-mr">
-                        {talent.popularity}%
-                    </div>
-                    <div className="winrate cell cell-mr">
-                        {talent.winrate}%
-                    </div>
-                    <div className="wins cell cell-mr">
-                        {talent.wins}
-                    </div>
-                    <div className="losses cell cell-mr">
-                        {talent.losses}
+                    <div className="talent-stats">
+                        <div className="games-played cell">
+                            {talent.gamesPlayed}
+                        </div>
+                        <div className="popularity cell">
+                            {talent.popularity}%
+                        </div>
+                        <div className="winrate cell">
+                            {talent.winrate}%
+                        </div>
+                        <div className="wins cell">
+                            {talent.wins}
+                        </div>
+                        <div className="losses cell">
+                            {talent.losses}
+                        </div>
                     </div>
                     <style jsx>{`
                         .container {
@@ -147,10 +147,8 @@ const Hero = (props) => {
 
                         .cell {
                             padding-top: 14px;
-                        }
-
-                        .cell-mr {
-                            margin-right: 25px;
+                            width: 75px;
+                            text-align: center;
                         }
 
                         .row {
@@ -168,31 +166,14 @@ const Hero = (props) => {
                         }
 
                         .talent-name {
+                            padding-top: 14px;
                             width: 175px;
                         }
-                    
-                        .games-played {
-                            width: 90px;
-                        }
-                
-                        .popularity {
-                            width: 120px;
-                        }
-                
-                        .pickrate {
-                            width: 75px;
-                        }
-                
-                        .winrate {
-                            width: 120px;
-                        }
 
-                        .wins {
-                            width: 75px;
-                        }
-
-                        .losses {
-                            width: 75px;
+                        .talent-stats {
+                            display: flex;
+                            justify-content: space-around;
+                            width: 100%;
                         }
                     `}</style>
                 </div>
@@ -210,7 +191,7 @@ const Hero = (props) => {
         <div className="wrap">
             <>  
                 <div className="builds-module">
-                    <h2 style={{ color: '#cacaca' }}>Popular Builds</h2>
+                    <h2 style={{ color: '#cacaca', marginBottom: 0 }}>Popular Builds</h2>
                     <header className="build-header">
                         <div className="build-header-stats">
                             <div>
@@ -236,23 +217,25 @@ const Hero = (props) => {
                                 <h2>Level {props.name === 'Chromie' ? chromieConversion[i] : tierConversion[i]}</h2>
                             </header>
                             <header className="header">
-                                <div className="talent-name cell-mr">
+                                <div className="talent-name">
                                     Talent
                                 </div>
-                                <div className="games-played cell-mr">
-                                    # Games
-                                </div>
-                                <div className="popularity cell-mr">
-                                    Popularity
-                                </div>
-                                <div className="winrate cell-mr">
-                                    Win Rate
-                                </div>
-                                <div className="wins cell-mr">
-                                    Wins
-                                </div>
-                                <div className="losses cell-mr">
-                                    Losses
+                                <div className="talent-header-stats">
+                                    <div className="games-played">
+                                        # Games
+                                    </div>
+                                    <div className="popularity">
+                                        Popularity
+                                    </div>
+                                    <div className="winrate">
+                                        Win Rate
+                                    </div>
+                                    <div className="wins">
+                                        Wins
+                                    </div>
+                                    <div className="losses">
+                                        Losses
+                                    </div>
                                 </div>
                             </header>
                             {renderTalentTable(tier)}
@@ -305,7 +288,7 @@ const Hero = (props) => {
                 display: flex;
                 font-weight: 600;
                 padding: 10px 0;
-                width: fit-content;
+                width: 100%;
             }
 
             .header > .talent-name {
@@ -314,10 +297,6 @@ const Hero = (props) => {
 
             .cell {
                 padding-top: 14px;
-            }
-
-            .cell-mr {
-                margin-right: 25px;
             }
 
             .row {
@@ -341,29 +320,16 @@ const Hero = (props) => {
             .talent-name {
                 width: 175px;
             }
-        
-            .games-played {
-                width: 90px;
-            }
-    
-            .popularity {
-                width: 120px;
-            }
-    
-            .pickrate {
-                width: 75px;
-            }
-    
-            .winrate {
-                width: 120px;
+
+            .talent-header-stats {
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
             }
 
-            .wins {
+            .talent-header-stats > div {
                 width: 75px;
-            }
-
-            .losses {
-                width: 75px;
+                text-align: center;
             }
 
             .table {
