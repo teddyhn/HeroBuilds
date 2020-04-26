@@ -4,7 +4,7 @@ import TooltipTrigger from '../../components/TooltipTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileExport } from '@fortawesome/free-solid-svg-icons'
 
-const Builds = ({ builds, talents, modalShow }) => {
+const Builds = ({ builds, talents, modalShow, modalCode }) => {
 
     return builds.map((build, i) => {
         return (
@@ -37,7 +37,10 @@ const Builds = ({ builds, talents, modalShow }) => {
                     <div className="export-build">
                         <FontAwesomeIcon
                             icon={faFileExport} 
-                            onClick={() => modalShow(true)}
+                            onClick={() =>{
+                                modalCode(build.code);
+                                modalShow(true)
+                            }}
                             style={{ cursor: 'pointer' }}
                         />
                     </div>
@@ -93,7 +96,8 @@ const Builds = ({ builds, talents, modalShow }) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        modalShow: (show) => dispatch({ type: 'SET_MODAL_SHOW', payload: show })
+        modalShow: (show) => dispatch({ type: 'SET_MODAL_SHOW', payload: show }),
+        modalCode: (code) => dispatch({ type: 'SET_MODAL_CODE', payload: code })
     }
 }
 

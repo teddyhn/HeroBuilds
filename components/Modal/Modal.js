@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -8,6 +8,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 config.autoAddCss = false
 
 const Modal = (props) => {
+    const [copied, setCopied] = useState()
 
     return (
         <div className="modal-container">
@@ -16,7 +17,10 @@ const Modal = (props) => {
                     icon={faTimes} 
                     className="close-modal" 
                     style={{ position: 'absolute', top: '8px', right: '12px', cursor: 'pointer' }}
-                    onClick={() => props.modalShow(false)}
+                    onClick={() => {
+                        setCopied(null);
+                        props.modalShow(false)
+                    }}
                 />
                 <h3 style={{ color: 'rgb(255,255,255)', marginTop: 0 }}>Export build into the game client</h3>
                 <p>
@@ -24,10 +28,15 @@ const Modal = (props) => {
                     2. Open the Talents menu in Hero select.<br />
                     3. Click the cog button and paste the code below.
                 </p>
+                <div style={{ fontSize: '1.1em', marginTop: '1em', color: '#bfd4fd' }}>{props.code}</div>
                 <button
                     className="copy-build"
+                    onClick={() => {
+                        navigator.clipboard.writeText(props.code);
+                        setCopied('COPIED!')
+                    }}
                 >
-                    COPY CODE
+                    {copied || 'COPY CODE'}
                 </button>
             </div>
             <style jsx>{`
@@ -72,6 +81,11 @@ const Modal = (props) => {
                     padding: 8px 12px;
                     margin-top: 16px;
                     cursor: pointer;
+                    width: 90px;
+                }
+
+                .copy-build:focus {
+                    outline: none;
                 }
             `}</style>
         </div>
@@ -85,7 +99,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => ({
-    show: state.modal.show
+    show: state.modal.show,
+    code: state.modal.code
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Modal)
