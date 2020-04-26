@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -8,7 +8,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 config.autoAddCss = false
 
 const Modal = (props) => {
-    console.log(props)
 
     return (
         <div className="modal-container">

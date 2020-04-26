@@ -1,9 +1,12 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import TooltipTrigger from '../../components/TooltipTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileExport } from '@fortawesome/free-solid-svg-icons'
 
-const Builds = ({ builds, talents }) => {
+const Builds = ({ builds, talents, modalShow }) => {
+    console.log(modalShow)
+
     return builds.map(build => {
         return (
             <div>
@@ -35,12 +38,7 @@ const Builds = ({ builds, talents }) => {
                     <div className="export-build">
                         <FontAwesomeIcon
                             icon={faFileExport} 
-                            onClick={() => {
-                                initializeStore.dispatch({
-                                    type: 'SET_MODAL_SHOW',
-                                    payload: true
-                                })
-                            }}
+                            onClick={() => modalShow(true)}
                         />
                     </div>
                 </div>
@@ -93,4 +91,10 @@ const Builds = ({ builds, talents }) => {
     })
 }
 
-export default Builds;
+const mapDispatchToProps = dispatch => {
+    return {
+        modalShow: (show) => dispatch({ type: 'SET_MODAL_SHOW', payload: show })
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Builds)
