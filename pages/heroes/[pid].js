@@ -4,15 +4,13 @@ import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import Builds from '../../components/Builds/Builds'
 import TalentTables from '../../components/TalentTable/TalentTable'
-import TooltipTrigger from '../../components/TooltipTrigger'
 import Progress from '../../components/ProgressBar/Progress'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal/Modal'
-import initializeStore from '../../src/store'
 
 config.autoAddCss = false;
 
-const Hero = (props) => {
+const Page = (props) => {
     const [isLoading, setIsLoading] = useState(true)
 
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
@@ -51,7 +49,7 @@ const Hero = (props) => {
                     </div>
                     {props.talents.map((tier, i) => {
                         return (
-                            <div className="table">
+                            <div className="table" key={`table-${i}`}>
                                 <header>
                                     <h2>Level {props.name === 'Chromie' ? chromieConversion[i] : tierConversion[i]}</h2>
                                 </header>
@@ -204,4 +202,4 @@ export async function getServerSideProps(context) {
     })
 }
 
-export default Hero;
+export default Page;

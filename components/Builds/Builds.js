@@ -5,19 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileExport } from '@fortawesome/free-solid-svg-icons'
 
 const Builds = ({ builds, talents, modalShow }) => {
-    console.log(modalShow)
 
-    return builds.map(build => {
+    return builds.map((build, i) => {
         return (
-            <div>
+            <div key={i}>
                 <div className="row">
                     <div className="build">
                         {build.talents.map((x, i) => {
                             return (
-                                <div className="talent">
+                                <div className="talent" key={i}>
                                     {talents[i].map((talent, j) => {
                                         if (talent.name === x) {
-                                            return <TooltipTrigger talent={talents[i][j]} offset={'48px'} />
+                                            return <TooltipTrigger talent={talents[i][j]} offset={'48px'} key={j} />
                                         }
                                     })}
                                 </div>
@@ -39,6 +38,7 @@ const Builds = ({ builds, talents, modalShow }) => {
                         <FontAwesomeIcon
                             icon={faFileExport} 
                             onClick={() => modalShow(true)}
+                            style={{ cursor: 'pointer' }}
                         />
                     </div>
                 </div>

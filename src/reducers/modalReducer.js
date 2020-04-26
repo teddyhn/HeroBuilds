@@ -1,4 +1,4 @@
-const initialState = { show: true };
+const initialState = { show: false };
 
 export default function(state = initialState, action) {
   switch (action.type) {

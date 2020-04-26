@@ -3,9 +3,9 @@ import TooltipTrigger from '../TooltipTrigger'
 
 const TalentTable = ({ tier }) => {
 
-    return tier.map(talent => {
+    return tier.map((talent, i) => {
         return (
-            <div className="row">
+            <div className="row" key={i}>
                 <div className="talent-info">
                     <div className="talent-img">
                         <TooltipTrigger talent={talent} />
