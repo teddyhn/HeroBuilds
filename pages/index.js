@@ -380,6 +380,7 @@ export async function getStaticProps() {
       heroes.forEach(i => {
         if (i.PrimaryName === hero.name) {
           hero.role = i.Group;
+          hero.subgroup = i.SubGroup;
         }
       })
     })
