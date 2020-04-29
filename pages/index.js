@@ -181,9 +181,9 @@ export const Index = props => {
           return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
         })
               .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
-              .map(hero => {
+              .map((hero, i) => {
                 return (
-                  <div className="row">
+                  <div className="row" key={`row-${i}`}>
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
                       <div
                         className="hero-img"

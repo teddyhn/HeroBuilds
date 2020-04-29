@@ -13,32 +13,11 @@ config.autoAddCss = false;
 
 const Page = (props) => {
     const [isLoading, setIsLoading] = useState(true)
-    const [heroData, setHeroData] = useState()
 
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
 
-    const fetchHeroData = async () => {
-        let heroes = require('../../Heroes.json');
-
-        return await axios.get('https://herobuilds-api.herokuapp.com/api/heroes/').then(res => {
-            res.data.heroes.map(hero => {
-                heroes.forEach(i => {
-                  if (i.PrimaryName === hero.name) {
-                    hero.role = i.Group;
-                    hero.subgroup = i.SubGroup;
-                  }
-                })
-            })
-      
-            return setHeroData(res.data.heroes.filter(hero => hero.name === props.name));
-        })
-    }
-
-    console.log(heroData)
-
     useEffect(() => {
-        fetchHeroData();
         setIsLoading(false);
     }, [])
 
@@ -49,33 +28,32 @@ const Page = (props) => {
             <div className="top-module">
                 <div className="wrap">
                     <div style={{ display: 'flex' }}>
-                        {heroData ?
-                        (<>
+                        <>
                             <Img 
-                                src={`https://www.heroesprofile.com/includes/images/heroes/${heroData[0].img}`}
+                                src={`https://www.heroesprofile.com/includes/images/heroes/${props.heroData[0].img}`}
                                 style={{ borderRadius: '3px', border: '1px solid #030303', marginRight: '1rem' }}
                                 loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
                             />
                             <div className="hero-info">
                                 <h2 style={{ margin: 0, color: 'rgb(202, 202, 202)' }}>{props.name}</h2>
-                                <div>{heroData[0].role}</div>
-                                {heroData[0].role !== heroData[0].subgroup ? <div>{heroData[0].subgroup}</div> : null}
+                                <div>{props.heroData[0].role}</div>
+                                {props.heroData[0].role !== props.heroData[0].subgroup ? <div>{props.heroData[0].subgroup}</div> : null}
                                 <ul className="stats-header">
                                     <li>
                                         Games Played
-                                        <span>{heroData[0].gamesPlayed}</span>
+                                        <span>{props.heroData[0].gamesPlayed}</span>
                                     </li>
                                     <li>
                                         Pick Rate
-                                        <span>{heroData[0].pickrate}%</span>
+                                        <span>{props.heroData[0].pickrate}%</span>
                                     </li>
                                     <li>
                                         Win Rate
-                                        <span>{heroData[0].winrate}%</span>
+                                        <span>{props.heroData[0].winrate}%</span>
                                     </li>
                                 </ul>
                             </div>
-                        </>) : null}
+                        </>
                     </div>
                 </div>
                 <style jsx>{`
@@ -290,12 +268,31 @@ const Page = (props) => {
 }
 
 export async function getServerSideProps(context) {
-  
-    return await axios.get(`https://herobuilds-api.herokuapp.com/api/hero/${context.query.pid}`).then(res => {
-      return {
-        props: { ...res.data, name: context.query.pid }
-      }
+    let heroes = require('../../Heroes.json');
+
+    const [res, res2] = await Promise.all([
+        axios.get(`https://herobuilds-api.herokuapp.com/api/hero/${context.query.pid}`),
+        axios.get('https://herobuilds-api.herokuapp.com/api/heroes/')
+    ])
+
+    res2.data.heroes.map(hero => {
+        heroes.forEach(i => {
+          if (i.PrimaryName === hero.name) {
+            hero.role = i.Group;
+            hero.subgroup = i.SubGroup;
+          }
+        })
     })
+
+    const filteredHeroData = res2.data.heroes.filter(hero => hero.name === context.query.pid)
+    
+    return {
+        props: {
+            ...res.data,
+            heroData: filteredHeroData,
+            name: context.query.pid
+        }
+    }
 }
 
 export default Page;
