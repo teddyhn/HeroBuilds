@@ -59,6 +59,7 @@ const Page = (props) => {
                 <style jsx>{`
                     .top-module {
                         background-color: #242424;
+                        min-width: 880.625px;
                     }
 
                     .wrap {
