@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
 import axios from 'axios'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -7,6 +8,7 @@ import TalentTables from '../../components/TalentTable/TalentTable'
 import Progress from '../../components/ProgressBar/Progress'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal/Modal'
+import Typeahead from '../../components/Typeahead/Typeahead'
 import Img from 'react-image'
 
 config.autoAddCss = false;
@@ -16,6 +18,12 @@ const Page = (props) => {
 
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
+
+    Router.events.on('routeChangeStart', url => {
+        setIsLoading(true)
+    })
+    Router.events.on('routeChangeComplete', () => setIsLoading(false))
+    Router.events.on('routeChangeError', () => setIsLoading(false))
 
     useEffect(() => {
         setIsLoading(false);
@@ -27,7 +35,8 @@ const Page = (props) => {
             <Modal />
             <div className="top-module">
                 <div className="wrap">
-                    <div style={{ display: 'flex' }}>
+                    <Typeahead heroesData={props.heroesData} />
+                    <div style={{ display: 'flex', marginTop: '2rem' }}>
                         <>
                             <Img 
                                 src={`https://www.heroesprofile.com/includes/images/heroes/${props.heroData[0].img}`}
@@ -290,6 +299,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             ...res.data,
+            heroesData: res2.data.heroes,
             heroData: filteredHeroData,
             name: context.query.pid
         }
