@@ -36,7 +36,7 @@ const Page = (props) => {
             <div className="top-module">
                 <div className="wrap">
                     <Typeahead heroesData={props.heroesData} />
-                    <div style={{ display: 'flex' }}>
+                    <div style={{ display: 'flex', marginTop: '2rem' }}>
                         <>
                             <Img 
                                 src={`https://www.heroesprofile.com/includes/images/heroes/${props.heroData[0].img}`}
