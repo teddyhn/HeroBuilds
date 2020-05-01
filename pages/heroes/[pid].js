@@ -7,6 +7,7 @@ import TalentTables from '../../components/TalentTable/TalentTable'
 import Progress from '../../components/ProgressBar/Progress'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal/Modal'
+import Typeahead from '../../components/Typeahead/Typeahead'
 import Img from 'react-image'
 
 config.autoAddCss = false;
@@ -27,6 +28,7 @@ const Page = (props) => {
             <Modal />
             <div className="top-module">
                 <div className="wrap">
+                    <Typeahead heroesData={props.heroesData} />
                     <div style={{ display: 'flex' }}>
                         <>
                             <Img 
@@ -290,6 +292,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             ...res.data,
+            heroesData: res2.data.heroes,
             heroData: filteredHeroData,
             name: context.query.pid
         }
