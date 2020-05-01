@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import TooltipTrigger from '../../components/TooltipTrigger'
+import TooltipTrigger from '../../components/Tooltip/TooltipTrigger'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileExport } from '@fortawesome/free-solid-svg-icons'
 

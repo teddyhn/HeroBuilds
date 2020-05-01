@@ -1,5 +1,5 @@
 import React from 'react'
-import TooltipTrigger from '../TooltipTrigger'
+import TooltipTrigger from '../Tooltip/TooltipTrigger'
 
 const TalentTable = ({ tier }) => {
 
