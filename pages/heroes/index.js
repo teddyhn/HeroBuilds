@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import HeroTiles from '../../components/HeroTiles/HeroTiles'
 
 export const Index = props => {
     const [activeRole, setActiveRole] = useState('All')
@@ -38,6 +39,7 @@ export const Index = props => {
                         </a>
                     </div>
                 </header>
+                <HeroTiles heroes={props.heroes} />
             </div>
             <style jsx>{`
                 .container {
@@ -102,7 +104,7 @@ export const Index = props => {
         
                 .wrap {
                     margin: 0 auto;
-                    width: 50%;
+                    width: 55%;
                     position: relative;
                 }
             `}</style>
