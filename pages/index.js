@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
 import axios from 'axios'
 import Link from 'next/link'
 import Img from 'react-image'
@@ -28,6 +29,12 @@ export const Index = props => {
 
     else return setSortOrder('descending');
   }
+
+  Router.events.on('routeChangeStart', url => {
+    setIsLoading(true)
+  })
+  Router.events.on('routeChangeComplete', () => setIsLoading(false))
+  Router.events.on('routeChangeError', () => setIsLoading(false))
 
   useEffect(() => {
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })));
@@ -187,7 +194,6 @@ export const Index = props => {
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
                       <div
                         className="hero-img"
-                        onClick={() => setIsLoading(true)}
                       >
                         <Img 
                           height="34px" 
@@ -200,7 +206,6 @@ export const Index = props => {
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
                       <div
                         className="hero-name cell cell-mr"
-                        onClick={() => setIsLoading(true)}
                       >
                         {hero.name}
                       </div>

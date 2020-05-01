@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import Router from 'next/router'
 import axios from 'axios'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
@@ -17,6 +18,12 @@ const Page = (props) => {
 
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
+
+    Router.events.on('routeChangeStart', url => {
+        setIsLoading(true)
+    })
+    Router.events.on('routeChangeComplete', () => setIsLoading(false))
+    Router.events.on('routeChangeError', () => setIsLoading(false))
 
     useEffect(() => {
         setIsLoading(false);

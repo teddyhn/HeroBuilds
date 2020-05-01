@@ -8,8 +8,6 @@ export const Typeahead = (props) => {
     const [showResults, setShowResults] = useState(false)
     const [hover, setHover] = useState(false)
 
-    console.log(props)
-
     let heroes = require('../../Heroes.json');
 
     const handleChange = e => {
@@ -76,7 +74,6 @@ export const Typeahead = (props) => {
                 onMouseLeave={() => setHover(false)}
             >
                 {searchResults.map(result => {
-                    console.log(result)
                     return (
                         <Link href="/heroes/[pid]" as={`/heroes/${result}`}>
                             <div className="result">
