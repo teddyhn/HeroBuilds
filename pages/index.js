@@ -364,13 +364,16 @@ export const Index = props => {
       }
     `}</style>
     <style jsx global>{`
-        body {
-          color: #888;
-          font-family: lato,sans-serif;
-          background: #171717;
-          margin: 0;
-          width: calc(100vw - 34px);
-        }
+      html {
+        overflow-y: overlay;
+      }
+
+      body {
+        color: #888;
+        font-family: lato,sans-serif;
+        background: #171717;
+        margin: 0;
+      }
     `}</style>
     </div>
   )

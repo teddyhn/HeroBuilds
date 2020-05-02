@@ -155,6 +155,10 @@ export const Index = props => {
                     }
                 `}</style>
                 <style jsx global>{`
+                    html {
+                        overflow-y: overlay;
+                    }
+                    
                     body {
                         color: #888;
                         font-family: lato,sans-serif;
