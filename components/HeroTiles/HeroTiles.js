@@ -35,8 +35,8 @@ export const HeroTiles = props => {
                 return 0
             }).map((hero, i) => {
                 return (
-                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                        <div className="hero-tile" key={`tile-${i}`}>
+                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`} key={`tile-${i}`}>
+                        <div className="hero-tile">
                             <div className="left">
                                 <Img 
                                     height="70px" 
@@ -60,9 +60,11 @@ export const HeroTiles = props => {
             })}
             <style jsx>{`
                 .hero-tiles {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: space-between;
+                    display: grid;
+                    grid-template-columns: 25% 25% 25% 25%;
+                    grid-template-rows: auto auto auto auto; 
+                    column-gap: 10px;
+                    row-gap: 5px;
                     margin-top: 0.5rem;
                 }
 
@@ -71,7 +73,7 @@ export const HeroTiles = props => {
                     -moz-box-sizing: border-box;
                     box-sizing: border-box;
                     display: flex;
-                    width: 24.5%;
+                    width: 100%;
                     padding: 0.75rem;
                     border: 1px solid rgb(51, 51, 51);
                     border-radius: 4px;
@@ -109,6 +111,27 @@ export const HeroTiles = props => {
                     padding: 0;
                     margin: 0;
                     font-size: 0.75rem;
+                }
+
+                @media only screen and (max-width: 1200px) {
+                    .hero-tiles {
+                        grid-template-columns: 33% 33% 33%;
+                        grid-template-rows: auto auto auto;
+                    }
+                }
+
+                @media only screen and (max-width: 900px) {
+                    .hero-tiles {
+                        grid-template-columns: 50% 50%;
+                        grid-template-rows: auto auto;
+                    }
+                }
+
+                @media only screen and (max-width: 600px) {
+                    .hero-tiles {
+                        grid-template-columns: 100%;
+                        grid-template-rows: auto;
+                    }
                 }
             `}</style>
         </div>

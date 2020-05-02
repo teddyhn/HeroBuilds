@@ -1,9 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import HeroTiles from '../../components/HeroTiles/HeroTiles'
 
 export const Index = props => {
     const [activeRole, setActiveRole] = useState('All')
+    const [heroes, setHeroes] = useState()
+
+    useEffect(() => {
+        setHeroes(props.heroes.filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }))
+    }, [activeRole])
+
+    console.log(heroes);
 
     return (
         <div className="container">
@@ -11,35 +18,35 @@ export const Index = props => {
                 <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <div className="role-filters">
                         <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => setActiveRole('All')}>
-                            All
+                            <div>All</div>
                         </a>
                         <a className={`role-selection tank ${activeRole === 'Tank' ? 'active' : null}`} onClick={() => setActiveRole('Tank')}>
                             <img className="role-img" src={require('../../public/assets/role/tank.png')} />
-                            Tank
+                            <p>Tank</p>
                         </a>
                         <a className={`role-selection bruiser ${activeRole === 'Bruiser' ? 'active' : null}`} onClick={() => setActiveRole('Bruiser')}>
                             <img className="role-img" src={require('../../public/assets/role/bruiser.png')} />
-                            Bruiser
+                            <p>Bruiser</p>
                         </a>
                         <a className={`role-selection ranged ${activeRole === 'Ranged Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Ranged Assassin')}>
                             <img className="role-img" src={require('../../public/assets/role/ranged.png')} />
-                            Ranged Assassin
+                            <p>Ranged Assassin</p>
                         </a>
                         <a className={`role-selection melee ${activeRole === 'Melee Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Melee Assassin')}>
                             <img className="role-img" src={require('../../public/assets/role/melee.png')} />
-                            Melee Assassin
+                            <p>Melee Assassin</p>
                         </a>
                         <a className={`role-selection healer ${activeRole === 'Healer' ? 'active' : null}`} onClick={() => setActiveRole('Healer')}>
                             <img className="role-img" src={require('../../public/assets/role/healer.png')} />
-                            Healer
+                            <p>Healer</p>
                         </a>
                         <a className={`role-selection support ${activeRole === 'Support' ? 'active' : null}`} onClick={() => setActiveRole('Support')}>
                             <img className="role-img" src={require('../../public/assets/role/support.png')} />
-                            Support
+                            <p>Support</p>
                         </a>
                     </div>
                 </header>
-                <HeroTiles heroes={props.heroes} />
+                {heroes ? <HeroTiles heroes={heroes}/> : null}
             </div>
             <style jsx>{`
                 .container {
@@ -101,11 +108,37 @@ export const Index = props => {
                     display: flex;
                     align-items: center;
                 }
+
+                .role-selection p {
+                    margin: 0;
+                }
         
                 .wrap {
                     margin: 0 auto;
-                    width: 55%;
+                    width: 60%;
                     position: relative;
+                }
+
+                @media only screen and (max-width: 1500px) {
+                    .wrap {
+                        width: 80%;
+                    }
+                }
+
+                @media only screen and (max-width: 1200px) {
+                    .wrap {
+                        width: 90%;
+                    }
+                }
+
+                @media only screen and (max-width: 900px) {
+                    .role-selection p {
+                        display: none;
+                    }
+
+                    .role-img {
+                        margin-right: 0;
+                    }
                 }
             `}</style>
             <style jsx global>{`
@@ -114,7 +147,6 @@ export const Index = props => {
                     font-family: lato,sans-serif;
                     background: #171717;
                     margin: 0;
-                    width: calc(100vw - 34px);
                 }
             `}</style>
         </div>
