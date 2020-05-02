@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Router from 'next/router'
 import HeroTiles from '../../components/HeroTiles/HeroTiles'
 import TypeaheadFilter from '../../components/Typeahead/TypeaheadFilter'
 import Layout from '../../components/Layout'
+import Progress from '../../components/ProgressBar/Progress'
 
 export const Index = props => {
+    const [isLoading, setIsLoading] = useState(true)
     const [activeRole, setActiveRole] = useState('All')
     const [heroes, setHeroes] = useState()
 
+    Router.events.on('routeChangeStart', url => {
+        setIsLoading(true)
+    })
+    Router.events.on('routeChangeComplete', () => setIsLoading(false))
+    Router.events.on('routeChangeError', () => setIsLoading(false))
+
     useEffect(() => {
         setHeroes(props.heroes.filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }))
+        setIsLoading(false)
     }, [activeRole])
 
     return (
         <Layout>
+            <Progress isAnimating={isLoading} />
             <div className="container">
                 <div className="wrap">
                     <TypeaheadFilter />
