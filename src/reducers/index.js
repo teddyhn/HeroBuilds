@@ -1,6 +1,8 @@
 import { combineReducers } from "redux";
 import modalReducer from "./modalReducer";
+import filterReducer from "./filterReducer";
 
 export default combineReducers({
-  modal: modalReducer
+  modal: modalReducer,
+  filter: filterReducer
 });
