@@ -1,6 +1,7 @@
 import React from 'react'
 import Img from 'react-image'
 import Link from 'next/link'
+import { connect } from 'react-redux'
 
 export const HeroTiles = props => {
 
@@ -33,7 +34,9 @@ export const HeroTiles = props => {
                 }
 
                 return 0
-            }).map((hero, i) => {
+            })
+            .filter(el => el.name.toLowerCase().includes(props.query.toLowerCase()))
+            .map((hero, i) => {
                 return (
                     <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`} key={`tile-${i}`}>
                         <div className="hero-tile">
@@ -65,7 +68,7 @@ export const HeroTiles = props => {
                     grid-template-rows: auto auto auto auto; 
                     column-gap: 10px;
                     row-gap: 5px;
-                    margin-top: 0.5rem;
+                    margin-top: 10px;
                 }
 
                 .hero-tile {
@@ -138,4 +141,8 @@ export const HeroTiles = props => {
     )
 }
 
-export default HeroTiles;
+const mapStateToProps = state => ({
+    query: state.filter.query
+})
+
+export default connect(mapStateToProps)(HeroTiles);
