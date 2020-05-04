@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-import Router from 'next/router'
 import Link from 'next/link'
 
 export const Navbar = () => {
@@ -10,6 +9,13 @@ export const Navbar = () => {
             const activescroll = window.scrollY < 100 ? false : true;
             setActivescroll(activescroll)
         });
+
+        return function cleanup() {
+            document.removeEventListener("scroll", () => {
+                const activescroll = window.scrollY < 100 ? false : true;
+                setActivescroll(activescroll)
+            });
+        }
     })
 
     return (

@@ -89,7 +89,7 @@ export const Typeahead = (props) => {
                 >
                     {searchResults.map((result, i) => {
                         return (
-                            <Link href="/heroes/[pid]" as={`/heroes/${result}`}>
+                            <Link key={i} href="/heroes/[pid]" as={`/heroes/${result}`}>
                                 <div className="result" key={`result-${i}`}>
                                     {props.heroesData.map((hero, i) => {
                                         if (hero.name === result) {

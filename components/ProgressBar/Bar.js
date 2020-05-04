@@ -11,7 +11,7 @@ const Bar = ({ progress, animationDuration }) => (
       top: 0,
       transition: `margin-left ${animationDuration}ms linear`,
       width: '100%',
-      zIndex: 1031,
+      zIndex: 99999,
     }}
   >
     <div
