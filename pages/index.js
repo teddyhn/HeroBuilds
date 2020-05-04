@@ -37,13 +37,19 @@ export const Index = props => {
       setIsLoading(true);
     }
 
-    Router.events.on('routeChangeStart', handleRouteChange)
+    const handleRouteChangeComplete = url => {
+      setIsLoading(false);
+    }
+
+    Router.events.on('routeChangeStart', handleRouteChange);
+    Router.events.on('routeChangeComplete', handleRouteChangeComplete);
 
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })));
     setIsLoading(false)
 
     return () => {
-      Router.events.off('routeChangeStart', handleRouteChange)
+      Router.events.off('routeChangeStart', handleRouteChange);
+      Router.events.off('routeChangeComplete', handleRouteChangeComplete);
     }
   }, [heroes])
 
@@ -256,10 +262,6 @@ export const Index = props => {
         </div>
       </div>
     <style jsx>{`
-      .container {
-        font-size: 14px;
-      }
-
       .top-module {
         background-color: #242424;
         margin-top: 54px;
@@ -355,6 +357,7 @@ export const Index = props => {
         margin: 0 auto;
         width: 50%;
         position: relative;
+        font-size: 0.9em
       }
       
       .hero {

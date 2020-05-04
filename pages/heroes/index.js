@@ -16,14 +16,20 @@ export const Index = props => {
         const handleRouteChange = url => {
           setIsLoading(true);
         }
+
+        const handleRouteChangeComplete = url => {
+            setIsLoading(false);
+        }
     
         Router.events.on('routeChangeStart', handleRouteChange)
+        Router.events.on('routeChangeComplete', handleRouteChangeComplete)
     
         setHeroes(props.heroes.filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }))
         setIsLoading(false)
     
         return () => {
-          Router.events.off('routeChangeStart', handleRouteChange)
+          Router.events.off('routeChangeStart', handleRouteChange);
+          Router.events.off('routeChangeComplete', handleRouteChangeComplete);
         }
     }, [activeRole])
 
