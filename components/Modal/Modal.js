@@ -87,6 +87,20 @@ const Modal = (props) => {
                 .copy-build:focus {
                     outline: none;
                 }
+
+                @media only screen and (max-width: 1500px) {
+                    .modal-window {
+                        width: 50%;
+                        left: 25%;
+                    }
+                }
+
+                @media only screen and (max-width: 900px) {
+                    .modal-window {
+                        width: 90%;
+                        left: 5%;
+                    }
+                }
             `}</style>
         </div>
     )

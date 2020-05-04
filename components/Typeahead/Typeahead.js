@@ -128,7 +128,7 @@ export const Typeahead = (props) => {
                         -moz-box-sizing: border-box;
                         box-sizing: border-box;
                         display: flex;
-                        width: 60%;
+                        width: 40%;
                     }
 
                     .typeahead {
@@ -192,6 +192,12 @@ export const Typeahead = (props) => {
     
                     .result:hover {
                         background: #dbdbdb;
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .typeahead-container {
+                            width: 75%;
+                        }
                     }
                 `}</style>
         </div>

@@ -68,7 +68,6 @@ export const HeroTiles = props => {
                     grid-template-rows: auto auto auto auto; 
                     column-gap: 10px;
                     row-gap: 5px;
-                    margin-top: 10px;
                 }
 
                 .hero-tile {
