@@ -81,7 +81,6 @@ const Modal = (props) => {
                     padding: 8px 12px;
                     margin-top: 16px;
                     cursor: pointer;
-                    width: 90px;
                 }
 
                 .copy-build:focus {

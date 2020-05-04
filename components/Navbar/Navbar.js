@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import Router from 'next/router'
 import Link from 'next/link'
 
 export const Navbar = () => {
@@ -9,7 +10,7 @@ export const Navbar = () => {
             const activescroll = window.scrollY < 100 ? false : true;
             setActivescroll(activescroll)
         });
-    }, [])
+    })
 
     return (
         <header className={`nav ${activescroll ? 'active-scroll' : ''}`}>
