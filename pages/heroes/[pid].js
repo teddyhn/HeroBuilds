@@ -24,13 +24,19 @@ const Page = (props) => {
         const handleRouteChange = url => {
           setIsLoading(true);
         }
+
+        const handleRouteChangeComplete = url => {
+            setIsLoading(false);
+        }
     
-        Router.events.on('routeChangeStart', handleRouteChange)
+        Router.events.on('routeChangeStart', handleRouteChange);
+        Router.events.on('routeChangeComplete', handleRouteChangeComplete);
     
         setIsLoading(false)
     
         return () => {
-          Router.events.off('routeChangeStart', handleRouteChange)
+          Router.events.off('routeChangeStart', handleRouteChange);
+          Router.events.off('routeChangeComplete', handleRouteChangeComplete);
         }
     })
 
