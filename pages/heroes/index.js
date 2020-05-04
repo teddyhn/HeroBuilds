@@ -5,6 +5,7 @@ import HeroTiles from '../../components/HeroTiles/HeroTiles'
 import TypeaheadFilter from '../../components/Typeahead/TypeaheadFilter'
 import Layout from '../../components/Layout'
 import Progress from '../../components/ProgressBar/Progress'
+import Navbar from '../../components/Navbar/Navbar'
 
 export const Index = props => {
     const [isLoading, setIsLoading] = useState(true)
@@ -24,10 +25,16 @@ export const Index = props => {
 
     return (
         <Layout>
+            <Navbar />
             <Progress isAnimating={isLoading} />
+            <div className="top-module">
+                <div className="wrap">
+                    <h2 style={{ color: "#cbcbcb" }}>Heroes</h2>
+                    <TypeaheadFilter />
+                </div>
+            </div>
             <div className="container">
                 <div className="wrap">
-                    <TypeaheadFilter />
                     <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div className="role-filters">
                             <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => setActiveRole('All')}>
@@ -61,112 +68,109 @@ export const Index = props => {
                     </header>
                     {heroes ? <HeroTiles heroes={heroes}/> : null}
                 </div>
-                <style jsx>{`
-                    .container {
-                        padding: 2.5vh 0;
-                    }
-    
-                    .hero-img {
-                        cursor: pointer;
-                        height: 34px;
-                        margin: auto 10px auto 0;
-                        width: fit-content;
-                    }
-            
-                    header {
-                        color: #cacaca
-                    }
-            
-                    .header {
-                        display: flex;
-                        font-weight: 600;
-                        padding: 10px 0;
-                    }
-            
-                    .header > div {
-                        cursor: pointer;
-                        user-select: none;
-                    }
-            
-                    .role-filters {
-                        display: flex;
-                        border: 1px solid #2a2a2a;
-                        border-radius: 4px;
-                    }
-            
-                    .role-filters a {
-                        font-size: 0.75rem;
-                        padding: 10px 14px;
-                        border-right: 1px solid #2a2a2a;
-                        cursor: pointer;
-                        user-select: none;
-                    }
-            
-                    .role-filters a.support {
-                        border-right: none;
-                    }
-            
-                    .role-filters a.active {
-                        color: #eee;
-                        background: #272626;
-                        font-weight: 700;
-                    }
-            
-                    .role-img {
-                        height: 16px;
-                        margin-right: 5px;
-                    }
-            
-                    .role-selection {
-                        display: flex;
-                        align-items: center;
-                    }
-    
-                    .role-selection p {
-                        margin: 0;
-                    }
-            
-                    .wrap {
-                        margin: 0 auto;
-                        width: 60%;
-                        position: relative;
-                    }
-    
-                    @media only screen and (max-width: 1500px) {
-                        .wrap {
-                            width: 80%;
-                        }
-                    }
-    
-                    @media only screen and (max-width: 1200px) {
-                        .wrap {
-                            width: 90%;
-                        }
-                    }
-    
-                    @media only screen and (max-width: 900px) {
-                        .role-selection p {
-                            display: none;
-                        }
-    
-                        .role-img {
-                            margin-right: 0;
-                        }
-                    }
-                `}</style>
-                <style jsx global>{`
-                    html {
-                        overflow-y: overlay;
-                    }
-                    
-                    body {
-                        color: #888;
-                        font-family: lato,sans-serif;
-                        background: #171717;
-                        margin: 0;
-                    }
-                `}</style>
+                
             </div>
+            <style jsx>{`
+                .top-module {
+                    margin-top: 58px;
+                    background: #242424;
+                    padding: 10vh 0 20px 0;
+                }
+
+                .hero-img {
+                    cursor: pointer;
+                    height: 34px;
+                    margin: auto 10px auto 0;
+                    width: fit-content;
+                }
+        
+                header {
+                    color: #cacaca;
+                    margin: 20px 0;
+                }
+        
+                .role-filters {
+                    display: flex;
+                    border: 1px solid #2a2a2a;
+                    border-radius: 4px;
+                }
+        
+                .role-filters a {
+                    font-size: 0.75rem;
+                    padding: 10px 14px;
+                    border-right: 1px solid #2a2a2a;
+                    cursor: pointer;
+                    user-select: none;
+                }
+        
+                .role-filters a.support {
+                    border-right: none;
+                }
+        
+                .role-filters a.active {
+                    color: #eee;
+                    background: #272626;
+                    font-weight: 700;
+                }
+        
+                .role-img {
+                    height: 16px;
+                    margin-right: 5px;
+                }
+        
+                .role-selection {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .role-selection p {
+                    margin: 0;
+                }
+        
+                .wrap {
+                    margin: 0 auto;
+                    width: 50%;
+                    position: relative;
+                }
+                
+                .wrap > h2 {
+                    margin-top: 0;
+                }
+
+                @media only screen and (max-width: 1500px) {
+                    .wrap {
+                        width: 80%;
+                    }
+                }
+
+                @media only screen and (max-width: 1200px) {
+                    .wrap {
+                        width: 90%;
+                    }
+                }
+
+                @media only screen and (max-width: 900px) {
+                    .role-selection p {
+                        display: none;
+                    }
+
+                    .role-img {
+                        margin-right: 0;
+                    }
+                }
+            `}</style>
+            <style jsx global>{`
+                html {
+                    overflow-y: overlay;
+                }
+                
+                body {
+                    color: #888;
+                    font-family: lato,sans-serif;
+                    background: #171717;
+                    margin: 0;
+                }
+            `}</style>
         </Layout>
     )
 }

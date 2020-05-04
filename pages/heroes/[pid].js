@@ -8,6 +8,7 @@ import TalentTables from '../../components/TalentTable/TalentTable'
 import Progress from '../../components/ProgressBar/Progress'
 import Layout from '../../components/Layout'
 import Modal from '../../components/Modal/Modal'
+import Navbar from '../../components/Navbar/Navbar'
 import Typeahead from '../../components/Typeahead/Typeahead'
 import Img from 'react-image'
 
@@ -31,6 +32,7 @@ const Page = (props) => {
 
     return (
         <Layout>
+            <Navbar />
             <Progress isAnimating={isLoading} />
             <Modal />
             <div className="top-module">
@@ -68,14 +70,14 @@ const Page = (props) => {
                 <style jsx>{`
                     .top-module {
                         background-color: #242424;
-                        min-width: 880.625px;
+                        margin-top: 58px;
                     }
 
                     .wrap {
                         margin: 0 auto;
-                        width: 860.625px;
+                        width: 50%;
                         position: relative;
-                        padding: 8vh 0;
+                        padding: 10vh 0 5vh 0;
                     }
 
                     .hero-info {
@@ -107,6 +109,28 @@ const Page = (props) => {
                         margin: 0 14px;
                         color: #bfd4fd;
                     }
+
+                    @media only screen and (max-width: 1500px) {
+                        .wrap {
+                            width: 80%;
+                        }
+                    }
+    
+                    @media only screen and (max-width: 1200px) {
+                        .wrap {
+                            width: 90%;
+                        }
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .stats-header {
+                            display: none;
+                        }
+
+                        .hero-info > div {
+                            display: none;
+                        }
+                    }
                 `}</style>
             </div>
             <div className="container">
@@ -125,9 +149,9 @@ const Page = (props) => {
                                     <div>
                                         Win Rate
                                     </div>
-                                </div>
-                                <div className="export">
-                                    Export
+                                    <div className="export">
+                                        Export
+                                    </div>
                                 </div>
                             </header>
                             <Builds builds={props.builds} talents={props.talents} />
@@ -176,7 +200,7 @@ const Page = (props) => {
 
                     .wrap {
                         margin: 0 auto;
-                        width: 860.625px;
+                        width: 50%;
                         position: relative;
                     }
 
@@ -189,18 +213,20 @@ const Page = (props) => {
                     }
 
                     .build-header {
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing: border-box;
+                        box-sizing: border-box;
                         display: flex;
                         font-weight: 600;
                         padding: 10px 0;
-                        width: fit-content;
+                        width: 100%;
                     }
 
                     .build-header-stats {
                         display: flex;
                         justify-content: space-between;
-                        width: 411px;
-                        margin-left: 362px;
-                        margin-right: 42px;
+                        margin-left: calc(332px + 4%);
+                        width: 100%;
                     }
 
                     .build-header-stats > div {
@@ -260,6 +286,28 @@ const Page = (props) => {
 
                     h2 {
                         margin: 0.5rem 0;
+                    }
+
+                    @media only screen and (max-width: 1500px) {
+                        .wrap {
+                            width: 80%;
+                        }
+                    }
+    
+                    @media only screen and (max-width: 1200px) {
+                        .wrap {
+                            width: 90%;
+                        }
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .build-header-stats {
+                            display: none;
+                        }
+
+                        .talent-header-stats {
+                            display: none;
+                        }
                     }
                 `}</style>
                 <style jsx global>{`

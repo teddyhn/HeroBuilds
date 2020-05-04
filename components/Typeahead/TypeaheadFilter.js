@@ -44,7 +44,6 @@ export const TypeaheadFilter = (props) => {
                         box-sizing: border-box;
                         display: flex;
                         width: 50%;
-                        margin-bottom: 10px;
                     }
 
                     .typeahead {
@@ -82,6 +81,12 @@ export const TypeaheadFilter = (props) => {
                     input:focus {
                         outline: none;
                         color: #171717;
+                    }
+
+                    @media only screen and (max-width: 600px) {
+                        .typeahead-container {
+                            width: 75%;
+                        }
                     }
                 `}</style>
         </div>

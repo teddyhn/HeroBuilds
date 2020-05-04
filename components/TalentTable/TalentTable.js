@@ -16,18 +16,23 @@ const TalentTable = ({ tier }) => {
                 </div>
                 <div className="talent-stats">
                     <div className="games-played cell">
+                        <span className="label"># Games</span>
                         {talent.gamesPlayed}
                     </div>
                     <div className="popularity cell">
+                        <span className="label">Popularity</span>
                         {talent.popularity}%
                     </div>
                     <div className="winrate cell">
+                        <span className="label">Winrate</span>
                         {talent.winrate}%
                     </div>
                     <div className="wins cell">
+                        <span className="label">Wins</span>
                         {talent.wins}
                     </div>
                     <div className="losses cell">
+                        <span className="label">Losses</span>
                         {talent.losses}
                     </div>
                 </div>
@@ -58,6 +63,10 @@ const TalentTable = ({ tier }) => {
                         text-align: center;
                     }
 
+                    .cell > .label {
+                        display: none;
+                    }
+
                     .row {
                         display: flex;
                         height: 46px;
@@ -85,6 +94,24 @@ const TalentTable = ({ tier }) => {
                         display: flex;
                         justify-content: space-around;
                         width: 100%;
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .row {
+                            flex-direction: column;
+                            height: fit-content;
+                        }
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .cell > .label {
+                            display: block;
+                        }
+
+                        .cell {
+                            display: flex;
+                            flex-direction: column;
+                        }
                     }
                 `}</style>
             </div>

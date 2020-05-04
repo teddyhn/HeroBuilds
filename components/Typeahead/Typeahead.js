@@ -91,10 +91,11 @@ export const Typeahead = (props) => {
                         return (
                             <Link href="/heroes/[pid]" as={`/heroes/${result}`}>
                                 <div className="result" key={`result-${i}`}>
-                                    {props.heroesData.map(hero => {
+                                    {props.heroesData.map((hero, i) => {
                                         if (hero.name === result) {
                                             return (
                                                 <Img
+                                                    key={`img-${i}`}
                                                     height="26px"
                                                     width="26px"
                                                     src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
@@ -128,7 +129,7 @@ export const Typeahead = (props) => {
                         -moz-box-sizing: border-box;
                         box-sizing: border-box;
                         display: flex;
-                        width: 60%;
+                        width: 40%;
                     }
 
                     .typeahead {
@@ -192,6 +193,12 @@ export const Typeahead = (props) => {
     
                     .result:hover {
                         background: #dbdbdb;
+                    }
+
+                    @media only screen and (max-width: 900px) {
+                        .typeahead-container {
+                            width: 75%;
+                        }
                     }
                 `}</style>
         </div>

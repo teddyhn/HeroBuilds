@@ -64,6 +64,12 @@ export const Tooltip = props => {
                         bottom: -8px;
                         left: 168px;
                     }
+
+                    @media only screen and (max-width: 900px) {
+                        .tooltip {
+                            display: none;
+                        }
+                    }
                 `}</style>
             </div>
         </>
