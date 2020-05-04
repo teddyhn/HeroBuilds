@@ -8,6 +8,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Progress from '../components/ProgressBar/Progress'
+import Navbar from '../components/Navbar/Navbar'
+import Typeahead from '../components/Typeahead/Typeahead'
 
 config.autoAddCss = false;
 
@@ -47,9 +49,18 @@ export const Index = props => {
 
   return (
     <div className="container">
+      <Navbar />
       <Progress isAnimating={isLoading} />
+      <div className="top-module">
+        <div className="wrap">
+          <Typeahead heroesData={props.heroes} />
+          <p style={{ width: '50%', lineHeight: '1.6' }}>
+            HeroBuilds is a quick statistics reference tool for Heroes of the Storm players. Its purpose is to provide the Heroes of the Storm community easy to access to various gameplay statistics.
+          </p>
+        </div>
+      </div>
       <div className="wrap">
-        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
           <h2>Statistics</h2>
           <div className="role-filters">
             <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => setActiveRole('All')}>
@@ -247,6 +258,12 @@ export const Index = props => {
         font-size: 14px;
       }
 
+      .top-module {
+        background-color: #242424;
+        margin-top: 54px;
+        padding: 10vh 0 5vh 0;
+      }
+
       .hero-img {
         cursor: pointer;
         height: 34px;
@@ -331,18 +348,17 @@ export const Index = props => {
         margin: 0 auto;
         width: 50%;
         position: relative;
-        border-bottom: 1px solid #2a2a2a;
       }
       
       .hero {
         margin-left: 45px;
-        min-width: 110px;
+        min-width: 130px;
         padding-top: 14px;
       }
 
       .hero-name {
         cursor: pointer;
-        min-width: 110px;
+        min-width: 130px;
         padding-top: 14px;
       }
 
@@ -397,6 +413,18 @@ export const Index = props => {
 
         .delta-winrate {
           display: none;
+        }
+
+        .games-played {
+          display: none;
+        }
+
+        .hero-stats-header {
+          justify-content: space-around;
+        }
+
+        .hero-stats {
+          justify-content: space-around;
         }
       }
     `}</style>

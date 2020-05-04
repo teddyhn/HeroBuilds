@@ -129,7 +129,7 @@ export const Typeahead = (props) => {
                         -moz-box-sizing: border-box;
                         box-sizing: border-box;
                         display: flex;
-                        width: 40%;
+                        width: 50%;
                     }
 
                     .typeahead {
