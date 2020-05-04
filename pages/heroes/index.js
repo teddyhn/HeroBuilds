@@ -12,15 +12,19 @@ export const Index = props => {
     const [activeRole, setActiveRole] = useState('All')
     const [heroes, setHeroes] = useState()
 
-    Router.events.on('routeChangeStart', url => {
-        setIsLoading(true)
-    })
-    Router.events.on('routeChangeComplete', () => setIsLoading(false))
-    Router.events.on('routeChangeError', () => setIsLoading(false))
-
     useEffect(() => {
+        const handleRouteChange = url => {
+          setIsLoading(true);
+        }
+    
+        Router.events.on('routeChangeStart', handleRouteChange)
+    
         setHeroes(props.heroes.filter(el => { return activeRole !== 'All' ? el.role === activeRole : el }))
         setIsLoading(false)
+    
+        return () => {
+          Router.events.off('routeChangeStart', handleRouteChange)
+        }
     }, [activeRole])
 
     return (

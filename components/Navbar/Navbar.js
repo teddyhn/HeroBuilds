@@ -5,16 +5,15 @@ export const Navbar = () => {
     const [activescroll, setActivescroll] = useState()
 
     useEffect(() => {
-        document.addEventListener("scroll", () => {
+        const handleScroll = () => {
             const activescroll = window.scrollY < 100 ? false : true;
             setActivescroll(activescroll)
-        });
+        }
 
-        return function cleanup() {
-            document.removeEventListener("scroll", () => {
-                const activescroll = window.scrollY < 100 ? false : true;
-                setActivescroll(activescroll)
-            });
+        document.addEventListener("scroll", handleScroll);
+
+        return () => {
+            document.removeEventListener("scroll", handleScroll);
         }
     })
 

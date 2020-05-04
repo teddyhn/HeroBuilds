@@ -20,15 +20,19 @@ const Page = (props) => {
     const tierConversion = { 0: 1, 1: 4, 2: 7, 3: 10, 4: 13, 5: 16, 6: 20 }
     const chromieConversion = { 0: 1, 1: 2, 2: 5, 3: 8, 4: 11, 5: 14, 6: 18 }
 
-    Router.events.on('routeChangeStart', url => {
-        setIsLoading(true)
-    })
-    Router.events.on('routeChangeComplete', () => setIsLoading(false))
-    Router.events.on('routeChangeError', () => setIsLoading(false))
-
     useEffect(() => {
-        setIsLoading(false);
-    }, [])
+        const handleRouteChange = url => {
+          setIsLoading(true);
+        }
+    
+        Router.events.on('routeChangeStart', handleRouteChange)
+    
+        setIsLoading(false)
+    
+        return () => {
+          Router.events.off('routeChangeStart', handleRouteChange)
+        }
+    })
 
     return (
         <Layout>
