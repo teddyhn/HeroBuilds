@@ -37,7 +37,7 @@ export const Navbar = () => {
                     position: fixed;
                     top: 0;
                     z-index: 9999;
-                    width: 100%;
+                    width: 100vw;
                     background: #242424;
                 }
 

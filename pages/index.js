@@ -173,85 +173,87 @@ export const Index = props => {
             </div>
           </div>
         </header>
-        {heroes ? 
-        heroes.sort((a, b) => {
-          if (filter === 'name') {
-            if (sortOrder === 'ascending') {
-              if (a.name > b.name) {
+        <div className="stats-table">
+          {heroes ? 
+          heroes.sort((a, b) => {
+            if (filter === 'name') {
+              if (sortOrder === 'ascending') {
+                if (a.name > b.name) {
+                  return -1;
+                }
+  
+                if (b.name > a.name) {
+                  return 1;
+                }
+  
+                return 0;
+              }
+  
+              if (b.name > a.name) {
                 return -1;
               }
-
-              if (b.name > a.name) {
+  
+              if (a.name > b.name) {
                 return 1;
               }
-
-              return 0;
+  
+              return 0
             }
-
-            if (b.name > a.name) {
-              return -1;
+  
+            if (sortOrder === 'descending') {
+              return parseFloat(b[filter].replace(',', '')) - parseFloat(a[filter].replace(',', ''))
             }
-
-            if (a.name > b.name) {
-              return 1;
-            }
-
-            return 0
-          }
-
-          if (sortOrder === 'descending') {
-            return parseFloat(b[filter].replace(',', '')) - parseFloat(a[filter].replace(',', ''))
-          }
-          return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
-        })
-              .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
-              .map((hero, i) => {
-                return (
-                  <div className="row" key={`row-${i}`}>
-                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div
-                        className="hero-img"
-                      >
-                        <Img 
-                          height="34px" 
-                          src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
-                          style={{ borderRadius: '3px', border: '1px solid #030303' }}
-                          loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
-                        />
-                      </div>  
-                    </Link> 
-                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div
-                        className="hero-name"
-                      >
-                        {hero.name}
-                      </div>
-                    </Link>
-                    <div className="hero-stats">
-                      <div className="games-played cell">
-                        {hero.gamesPlayed}
-                      </div>
-                      <div className="popularity cell">
-                        {hero.popularity}%
-                        <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
-                      </div>
-                      <div className="pickrate cell">
-                        {hero.pickrate}%
-                      </div>
-                      <div className="banrate cell">
-                        {hero.banrate}%
-                      </div>
-                      <div className="winrate cell">
-                        {hero.winrate}%
-                        <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
-                      </div>
-                      <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
-                        {hero.deltaWinrate}
+            return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
+          })
+                .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
+                .map((hero, i) => {
+                  return (
+                    <div className="row" key={`row-${i}`}>
+                      <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                        <div
+                          className="hero-img"
+                        >
+                          <Img 
+                            height="34px" 
+                            src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
+                            style={{ borderRadius: '3px', border: '1px solid #030303' }}
+                            loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
+                          />
+                        </div>  
+                      </Link> 
+                      <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                        <div
+                          className="hero-name"
+                        >
+                          {hero.name}
+                        </div>
+                      </Link>
+                      <div className="hero-stats">
+                        <div className="games-played cell">
+                          {hero.gamesPlayed}
+                        </div>
+                        <div className="popularity cell">
+                          {hero.popularity}%
+                          <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
+                        </div>
+                        <div className="pickrate cell">
+                          {hero.pickrate}%
+                        </div>
+                        <div className="banrate cell">
+                          {hero.banrate}%
+                        </div>
+                        <div className="winrate cell">
+                          {hero.winrate}%
+                          <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
+                        </div>
+                        <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
+                          {hero.deltaWinrate}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              }) : null}
+                  )
+                }) : null}
+        </div>
       </div>
     <style jsx>{`
       .container {
@@ -335,6 +337,11 @@ export const Index = props => {
 
       .cell > span {
         margin-right: 4px;
+      }
+
+      .stats-table {
+        border-bottom: 1px solid #2a2a2a;
+        margin-bottom: 5vh;
       }
 
       .row {

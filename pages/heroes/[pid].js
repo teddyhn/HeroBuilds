@@ -229,7 +229,7 @@ const Page = (props) => {
                     .build-header-stats {
                         display: flex;
                         justify-content: space-between;
-                        margin-left: calc(332px + 4%);
+                        margin-left: calc(332px + 8%);
                         width: 100%;
                     }
 
