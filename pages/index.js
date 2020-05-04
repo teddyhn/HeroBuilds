@@ -61,7 +61,7 @@ export const Index = props => {
         <div className="wrap">
           <Typeahead heroesData={props.heroes} />
           <p style={{ width: '50%', lineHeight: '1.6' }}>
-            HeroBuilds is a quick statistics reference tool for Heroes of the Storm players. Its purpose is to provide the Heroes of the Storm community easy to access to various gameplay statistics.
+            HeroBuilds is a quick statistics reference tool for Heroes of the Storm players. Its purpose is to provide the Heroes of the Storm community easy access to various gameplay statistics.
           </p>
         </div>
       </div>
