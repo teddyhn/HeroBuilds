@@ -8,6 +8,8 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretUp, faCaretDown } from '@fortawesome/free-solid-svg-icons'
 import Progress from '../components/ProgressBar/Progress'
+import Navbar from '../components/Navbar/Navbar'
+import Typeahead from '../components/Typeahead/Typeahead'
 
 config.autoAddCss = false;
 
@@ -30,22 +32,35 @@ export const Index = props => {
     else return setSortOrder('descending');
   }
 
-  Router.events.on('routeChangeStart', url => {
-    setIsLoading(true)
-  })
-  Router.events.on('routeChangeComplete', () => setIsLoading(false))
-  Router.events.on('routeChangeError', () => setIsLoading(false))
-
   useEffect(() => {
+    const handleRouteChange = url => {
+      setIsLoading(true);
+    }
+
+    Router.events.on('routeChangeStart', handleRouteChange)
+
     setHighestWinrate(Math.max.apply(Math, heroes.map(o => { return o.winrate; })));
     setIsLoading(false)
+
+    return () => {
+      Router.events.off('routeChangeStart', handleRouteChange)
+    }
   }, [heroes])
 
   return (
     <div className="container">
+      <Navbar />
       <Progress isAnimating={isLoading} />
+      <div className="top-module">
+        <div className="wrap">
+          <Typeahead heroesData={props.heroes} />
+          <p style={{ width: '50%', lineHeight: '1.6' }}>
+            HeroBuilds is a quick statistics reference tool for Heroes of the Storm players. Its purpose is to provide the Heroes of the Storm community easy to access to various gameplay statistics.
+          </p>
+        </div>
+      </div>
       <div className="wrap">
-        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '20px' }}>
           <h2>Statistics</h2>
           <div className="role-filters">
             <a className={`role-selection all ${activeRole === 'All' ? 'active' : null}`} onClick={() => setActiveRole('All')}>
@@ -53,33 +68,33 @@ export const Index = props => {
             </a>
             <a className={`role-selection tank ${activeRole === 'Tank' ? 'active' : null}`} onClick={() => setActiveRole('Tank')}>
               <img className="role-img" src={require('../public/assets/role/tank.png')} />
-              Tank
+              <div>Tank</div>
             </a>
             <a className={`role-selection bruiser ${activeRole === 'Bruiser' ? 'active' : null}`} onClick={() => setActiveRole('Bruiser')}>
               <img className="role-img" src={require('../public/assets/role/bruiser.png')} />
-              Bruiser
+              <div>Bruiser</div>
             </a>
             <a className={`role-selection ranged ${activeRole === 'Ranged Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Ranged Assassin')}>
               <img className="role-img" src={require('../public/assets/role/ranged.png')} />
-              Ranged Assassin
+              <div>Ranged Assassin</div>
             </a>
             <a className={`role-selection melee ${activeRole === 'Melee Assassin' ? 'active' : null}`} onClick={() => setActiveRole('Melee Assassin')}>
               <img className="role-img" src={require('../public/assets/role/melee.png')} />
-              Melee Assassin
+              <div>Melee Assassin</div>
             </a>
             <a className={`role-selection healer ${activeRole === 'Healer' ? 'active' : null}`} onClick={() => setActiveRole('Healer')}>
               <img className="role-img" src={require('../public/assets/role/healer.png')} />
-              Healer
+              <div>Healer</div>
             </a>
             <a className={`role-selection support ${activeRole === 'Support' ? 'active' : null}`} onClick={() => setActiveRole('Support')}>
               <img className="role-img" src={require('../public/assets/role/support.png')} />
-              Support
+              <div>Support</div>
             </a>
           </div>
         </header>
         <header className="header">
           <div
-            className={`hero ${filter === 'name' ? sortOrder : ''} cell-mr`}
+            className={`hero ${filter === 'name' ? sortOrder : ''}`}
             onClick={() => {
               changeSortOrder('name');
               setFilter('name');
@@ -89,154 +104,166 @@ export const Index = props => {
             {filter === 'name' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
             {filter === 'name' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
           </div>
-          <div 
-            className={`games-played ${filter === 'gamesPlayed' ? sortOrder : ''} cell-mr`}
-            onClick={() => {
-              changeSortOrder('gamesPlayed');
-              setFilter('gamesPlayed');
-            }}
-          >
-            <span># Games</span>
-            {filter === 'gamesPlayed' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'gamesPlayed' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
-          </div>
-          <div 
-            className={`popularity cell-mr`}
-            onClick={() => {
-              changeSortOrder('popularity');
-              setFilter('popularity');
-            }}
-          >
-            <span>Popularity</span>
-            {filter === 'popularity' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'popularity' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
-          </div>
-          <div 
-            className={`pickrate ${filter === 'pickrate' ? sortOrder : ''} cell-mr`}
-            onClick={() => {
-              changeSortOrder('pickrate');
-              setFilter('pickrate');
-            }}
-          >
-            <span>Pick</span>
-            {filter === 'pickrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'pickrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
-          </div>
-          <div 
-            className={`banrate ${filter === 'banrate' ? sortOrder : ''} cell-mr`}
-            onClick={() => {
-              changeSortOrder('banrate');
-              setFilter('banrate');
-            }}
-          >
-            <span>Ban</span>
-            {filter === 'banrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'banrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
-          </div>
-          <div
-            className={`winrate ${filter === 'winrate' ? sortOrder : ''} cell-mr`}
-            onClick={() => {
-              changeSortOrder('winrate');
-              setFilter('winrate');
-            }}
-          >
-            <span>Win</span>
-            {filter === 'winrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'winrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
-          </div>
-          <div
-            className={`delta-winrate ${filter === 'deltaWinrate' ? sortOrder : ''}`}
-            onClick={() => {
-              changeSortOrder('deltaWinrate');
-              setFilter('deltaWinrate');
-            }}
-          >
-            <span>% Δ</span>
-            {filter === 'deltaWinrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
-            {filter === 'deltaWinrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+          <div className="hero-stats-header">
+            <div 
+              className={`games-played ${filter === 'gamesPlayed' ? sortOrder : ''} cell`}
+              onClick={() => {
+                changeSortOrder('gamesPlayed');
+                setFilter('gamesPlayed');
+              }}
+            >
+              <span># Games</span>
+              {filter === 'gamesPlayed' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'gamesPlayed' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
+            <div 
+              className={`popularity cell`}
+              onClick={() => {
+                changeSortOrder('popularity');
+                setFilter('popularity');
+              }}
+            >
+              <span>Popularity</span>
+              {filter === 'popularity' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'popularity' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
+            <div 
+              className={`pickrate ${filter === 'pickrate' ? sortOrder : ''} cell`}
+              onClick={() => {
+                changeSortOrder('pickrate');
+                setFilter('pickrate');
+              }}
+            >
+              <span>Pick</span>
+              {filter === 'pickrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'pickrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
+            <div 
+              className={`banrate ${filter === 'banrate' ? sortOrder : ''} cell`}
+              onClick={() => {
+                changeSortOrder('banrate');
+                setFilter('banrate');
+              }}
+            >
+              <span>Ban</span>
+              {filter === 'banrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'banrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
+            <div
+              className={`winrate ${filter === 'winrate' ? sortOrder : ''} cell`}
+              onClick={() => {
+                changeSortOrder('winrate');
+                setFilter('winrate');
+              }}
+            >
+              <span>Win</span>
+              {filter === 'winrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'winrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
+            <div
+              className={`delta-winrate ${filter === 'deltaWinrate' ? sortOrder : ''} cell`}
+              onClick={() => {
+                changeSortOrder('deltaWinrate');
+                setFilter('deltaWinrate');
+              }}
+            >
+              <span>% Δ</span>
+              {filter === 'deltaWinrate' && sortOrder === 'ascending' ? <FontAwesomeIcon icon={faCaretUp} /> : null}
+              {filter === 'deltaWinrate' && sortOrder === 'descending' ? <FontAwesomeIcon icon={faCaretDown} /> : null}
+            </div>
           </div>
         </header>
-        {heroes ? 
-        heroes.sort((a, b) => {
-          if (filter === 'name') {
-            if (sortOrder === 'ascending') {
-              if (a.name > b.name) {
+        <div className="stats-table">
+          {heroes ? 
+          heroes.sort((a, b) => {
+            if (filter === 'name') {
+              if (sortOrder === 'ascending') {
+                if (a.name > b.name) {
+                  return -1;
+                }
+  
+                if (b.name > a.name) {
+                  return 1;
+                }
+  
+                return 0;
+              }
+  
+              if (b.name > a.name) {
                 return -1;
               }
-
-              if (b.name > a.name) {
+  
+              if (a.name > b.name) {
                 return 1;
               }
-
-              return 0;
+  
+              return 0
             }
-
-            if (b.name > a.name) {
-              return -1;
+  
+            if (sortOrder === 'descending') {
+              return parseFloat(b[filter].replace(',', '')) - parseFloat(a[filter].replace(',', ''))
             }
-
-            if (a.name > b.name) {
-              return 1;
-            }
-
-            return 0
-          }
-
-          if (sortOrder === 'descending') {
-            return parseFloat(b[filter].replace(',', '')) - parseFloat(a[filter].replace(',', ''))
-          }
-          return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
-        })
-              .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
-              .map((hero, i) => {
-                return (
-                  <div className="row" key={`row-${i}`}>
-                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div
-                        className="hero-img"
-                      >
-                        <Img 
-                          height="34px" 
-                          src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
-                          style={{ borderRadius: '3px', border: '1px solid #030303' }}
-                          loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
-                        />
-                      </div>  
-                    </Link> 
-                    <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
-                      <div
-                        className="hero-name cell cell-mr"
-                      >
-                        {hero.name}
+            return parseFloat(a[filter].replace(',', '')) - parseFloat(b[filter].replace(',', ''))
+          })
+                .filter(el => { return activeRole !== 'All' ? el.role === activeRole : el })
+                .map((hero, i) => {
+                  return (
+                    <div className="row" key={`row-${i}`}>
+                      <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                        <div
+                          className="hero-img"
+                        >
+                          <Img 
+                            height="34px" 
+                            src={`https://www.heroesprofile.com/includes/images/heroes/${hero.img}`}
+                            style={{ borderRadius: '3px', border: '1px solid #030303' }}
+                            loader={<div style={{ height: '34px', width: '34px', backgroundColor: '#2a2a2a', borderRadius: '3px', border: '1px solid #030303' }}/>}
+                          />
+                        </div>  
+                      </Link> 
+                      <Link href="/heroes/[pid]" as={`/heroes/${hero.name}`}>
+                        <div
+                          className="hero-name"
+                        >
+                          {hero.name}
+                        </div>
+                      </Link>
+                      <div className="hero-stats">
+                        <div className="games-played cell">
+                          {hero.gamesPlayed}
+                        </div>
+                        <div className="popularity cell">
+                          {hero.popularity}%
+                          <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
+                        </div>
+                        <div className="pickrate cell">
+                          {hero.pickrate}%
+                        </div>
+                        <div className="banrate cell">
+                          {hero.banrate}%
+                        </div>
+                        <div className="winrate cell">
+                          {hero.winrate}%
+                          <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
+                        </div>
+                        <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
+                          {hero.deltaWinrate}
+                        </div>
                       </div>
-                    </Link>
-                    <div className="games-played cell cell-mr">
-                      {hero.gamesPlayed}
                     </div>
-                    <div className="popularity cell cell-mr">
-                      {hero.popularity}%
-                      <div style={{ height: '4px', width: `${hero.popularity}%`, backgroundColor: '#60CDCD' }} />
-                    </div>
-                    <div className="pickrate cell cell-mr">
-                      {hero.pickrate}%
-                    </div>
-                    <div className="banrate cell cell-mr">
-                      {hero.banrate}%
-                    </div>
-                    <div className="winrate cell cell-mr">
-                      {hero.winrate}%
-                      <div style={{ height: '4px', width: `${((hero.winrate - (highestWinrate - hero.winrate)) / highestWinrate) * 100}%`, backgroundColor: '#3BE33B' }} />
-                    </div>
-                    <div className={`delta-winrate ${hero.deltaWinrate[0] === '-' ? 'negative' : 'positive'} cell`}>
-                      {hero.deltaWinrate}
-                    </div>
-                  </div>
-                )
-              }) : null}
+                  )
+                }) : null}
+        </div>
       </div>
     <style jsx>{`
       .container {
         font-size: 14px;
+      }
+
+      .top-module {
+        background-color: #242424;
+        margin-top: 54px;
+        padding: 10vh 0 5vh 0;
       }
 
       .hero-img {
@@ -254,11 +281,18 @@ export const Index = props => {
         display: flex;
         font-weight: 600;
         padding: 10px 0;
+        width: 100%;
       }
 
       .header > div {
         cursor: pointer;
         user-select: none;
+      }
+      
+      .hero-stats-header {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
       }
 
       .role-filters {
@@ -297,62 +331,52 @@ export const Index = props => {
 
       .cell {
         padding-top: 14px;
+        width: 15%;
+        text-align: left;
       }
 
-      .cell-mr {
-        margin-right: 30px;
+      .cell > span {
+        margin-right: 4px;
       }
 
-      .cell-mr > span {
-        margin-right: 5px;
+      .stats-table {
+        border-bottom: 1px solid #2a2a2a;
+        margin-bottom: 5vh;
       }
 
       .row {
         display: flex;
         height: 46px;
         border-top: 1px solid #2a2a2a;
-        width: fit-content;
+        width: 100%;
       }
 
       .wrap {
         margin: 0 auto;
-        width: 860.625px;
+        width: 50%;
         position: relative;
-        border-bottom: 1px solid #2a2a2a;
       }
       
       .hero {
         margin-left: 45px;
-        width: 110px;
+        min-width: 130px;
+        padding-top: 14px;
       }
 
       .hero-name {
         cursor: pointer;
-        width: 110px;
+        min-width: 130px;
+        padding-top: 14px;
       }
 
-      .games-played {
-        width: 90px;
-      }
-
-      .popularity {
-        width: 120px;
-      }
-
-      .pickrate {
-        width: 75px;
-      }
-
-      .banrate {
-        width: 75px;
-      }
-
-      .winrate {
-        width: 120px;
+      .hero-stats {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
       }
 
       .delta-winrate {
-        width: 45px;
+        text-align: center;
       }
 
       .negative {
@@ -361,6 +385,54 @@ export const Index = props => {
 
       .positive {
         color: #3BE33B
+      }
+
+      @media only screen and (max-width: 1500px) {
+        header > h2 {
+          display: none;
+        }
+
+        .wrap {
+          width: 80%;
+        }
+      }
+
+      @media only screen and (max-width: 1200px) {
+          .wrap {
+              width: 90%;
+          }
+      }
+
+      @media only screen and (max-width: 900px) {
+        .role-selection > div {
+          display: none;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        .pickrate {
+          display: none;
+        }
+
+        .banrate {
+          display: none;
+        }
+
+        .delta-winrate {
+          display: none;
+        }
+
+        .games-played {
+          display: none;
+        }
+
+        .hero-stats-header {
+          justify-content: space-around;
+        }
+
+        .hero-stats {
+          justify-content: space-around;
+        }
       }
     `}</style>
     <style jsx global>{`

@@ -72,7 +72,7 @@ const Builds = ({ builds, talents, modalShow, modalCode }) => {
                     .build {
                         display: flex;
                         align-items: center;
-                        margin-right: 4%;
+                        margin-right: 8%;
                     }
 
                     .build-winrate {
