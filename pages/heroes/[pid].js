@@ -38,7 +38,7 @@ const Page = (props) => {
           Router.events.off('routeChangeStart', handleRouteChange);
           Router.events.off('routeChangeComplete', handleRouteChangeComplete);
         }
-    })
+    }, [props.heroData])
 
     return (
         <Layout>
