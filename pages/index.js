@@ -356,6 +356,7 @@ export const Index = props => {
       .wrap {
         margin: 0 auto;
         width: 50%;
+        max-width: 960px;
         position: relative;
         font-size: 0.9em
       }
@@ -364,6 +365,10 @@ export const Index = props => {
         margin-left: 45px;
         min-width: 130px;
         padding-top: 14px;
+      }
+
+      .hero > span {
+        margin-right: 4px;
       }
 
       .hero-name {

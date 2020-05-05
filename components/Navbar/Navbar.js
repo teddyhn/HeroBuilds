@@ -50,6 +50,7 @@ export const Navbar = () => {
                     display: flex;
                     align-items: center;
                     width: 50%;
+                    max-width: 960px;
                     margin: auto;
                     padding: 15px 0;
                 }
