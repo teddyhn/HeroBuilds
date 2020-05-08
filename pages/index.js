@@ -435,11 +435,13 @@ export const Index = props => {
         }
 
         .hero-stats-header {
-          justify-content: space-around;
+          justify-content: space-between;
+          margin-right: 5vw;
         }
 
         .hero-stats {
-          justify-content: space-around;
+          margin-right: 5vw;
+          justify-content: space-between;
         }
       }
     `}</style>
